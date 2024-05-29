@@ -338,7 +338,6 @@ trait Helpers
         if ($error = data_get($product, 'error', false)) {
             throw new \RuntimeException(data_get($error, 'details.0.description', 'Failed to add product'));
         }
-
         $this->product = $product;
 
         return $this;
@@ -438,7 +437,7 @@ trait Helpers
         $this->payment_preferences = [
             'auto_bill_outstanding'     => true,
             'setup_fee'                 => [
-                'value'         => $price,
+                'value'         => bcdiv($price, 1, 2),
                 'currency_code' => $this->getCurrency(),
             ],
             'setup_fee_failure_action'  => 'CONTINUE',
