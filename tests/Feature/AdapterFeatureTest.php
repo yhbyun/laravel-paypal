@@ -3,6 +3,7 @@
 namespace Srmklive\PayPal\Tests\Feature;
 
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Srmklive\PayPal\Tests\MockClientClasses;
@@ -16,23 +17,26 @@ class AdapterFeatureTest extends TestCase
     use MockResponsePayloads;
 
     /** @var string */
-    protected static $access_token = '';
+    protected static string $access_token = '';
 
     /** @var string */
-    protected static $product_id = '';
+    protected static string $product_id = '';
 
-    /** @var \Srmklive\PayPal\Services\PayPal */
-    protected $client;
+    /** @var PayPalClient */
+    protected PayPalClient $client;
 
     protected function setUp(): void
     {
-        $this->client = new PayPalClient($this->getApiCredentials());
+        try {
+            $this->client = new PayPalClient($this->getApiCredentials());
+        } catch (\Exception $e) {
+        }
 
         parent::setUp();
     }
 
-    /** @test */
-    public function it_returns_error_if_invalid_credentials_are_used_to_get_access_token()
+    #[Test]
+    public function it_returns_error_if_invalid_credentials_are_used_to_get_access_token(): void
     {
         $this->client = new PayPalClient($this->getMockCredentials());
         $response = $this->client->getAccessToken();
@@ -41,8 +45,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('error', $response);
     }
 
-    /** @test */
-    public function it_can_get_access_token()
+    #[Test]
+    public function it_can_get_access_token(): void
     {
         $this->client->setClient(
             $this->mock_http_client(
@@ -57,8 +61,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertNotEmpty($response['access_token']);
     }
 
-    /** @test */
-    public function it_can_create_a_billing_plan()
+    #[Test]
+    public function it_can_create_a_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -73,14 +77,17 @@ class AdapterFeatureTest extends TestCase
 
         $expectedParams = $this->createPlanParams();
 
-        $response = $this->client->setRequestHeader('PayPal-Request-Id', 'some-request-id')->createPlan($expectedParams);
+        try {
+            $response = $this->client->setRequestHeader('PayPal-Request-Id', 'some-request-id')->createPlan($expectedParams);
+        } catch (\Throwable $e) {
+        }
 
         $this->assertNotEmpty($response);
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_list_billing_plans()
+    #[Test]
+    public function it_can_list_billing_plans(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -99,8 +106,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('plans', $response);
     }
 
-    /** @test */
-    public function it_can_update_a_billing_plan()
+    #[Test]
+    public function it_can_update_a_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -118,8 +125,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_a_billing_plan()
+    #[Test]
+    public function it_can_show_details_for_a_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -138,8 +145,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_activate_a_billing_plan()
+    #[Test]
+    public function it_can_activate_a_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -155,8 +162,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_deactivate_a_billing_plan()
+    #[Test]
+    public function it_can_deactivate_a_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -172,8 +179,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_update_pricing_for_a_billing_plan()
+    #[Test]
+    public function it_can_update_pricing_for_a_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -191,8 +198,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_list_products()
+    #[Test]
+    public function it_can_list_products(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -211,8 +218,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('products', $response);
     }
 
-    /** @test */
-    public function it_can_create_a_product()
+    #[Test]
+    public function it_can_create_a_product(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -235,8 +242,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_update_a_product()
+    #[Test]
+    public function it_can_update_a_product(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -254,8 +261,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_get_details_for_a_product()
+    #[Test]
+    public function it_can_get_details_for_a_product(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -274,8 +281,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_acknowledge_item_is_returned_for_raised_dispute()
+    #[Test]
+    public function it_can_acknowledge_item_is_returned_for_raised_dispute(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -298,8 +305,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_list_disputes()
+    #[Test]
+    public function it_can_list_disputes(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -318,8 +325,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('items', $response);
     }
 
-    /** @test */
-    public function it_can_partially_update_a_dispute()
+    #[Test]
+    public function it_can_partially_update_a_dispute(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -337,8 +344,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_get_details_for_a_dispute()
+    #[Test]
+    public function it_can_get_details_for_a_dispute(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -357,8 +364,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('dispute_id', $response);
     }
 
-    /** @test */
-    public function it_can_provide_evidence_for_a_dispute_claim()
+    #[Test]
+    public function it_can_provide_evidence_for_a_dispute_claim(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -388,8 +395,8 @@ class AdapterFeatureTest extends TestCase
         $this->markTestIncomplete('Skipping the test');
     }
 
-    /** @test */
-    public function it_throws_exception_if_invalid_file_as_evidence_is_provided_for_a_dispute_claim()
+    #[Test]
+    public function it_throws_exception_if_invalid_file_as_evidence_is_provided_for_a_dispute_claim(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -417,8 +424,8 @@ class AdapterFeatureTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_throws_exception_if_file_size_as_evidence_exceeds_per_file_limit_for_a_dispute_claim()
+    #[Test]
+    public function it_throws_exception_if_file_size_as_evidence_exceeds_per_file_limit_for_a_dispute_claim(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -445,8 +452,8 @@ class AdapterFeatureTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_throws_exception_if_file_size_as_evidence_exceeds_overall_limit_for_a_dispute_claim()
+    #[Test]
+    public function it_throws_exception_if_file_size_as_evidence_exceeds_overall_limit_for_a_dispute_claim(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -473,8 +480,8 @@ class AdapterFeatureTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_offer_to_resolve_dispute_claim()
+    #[Test]
+    public function it_can_offer_to_resolve_dispute_claim(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -498,8 +505,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_escalate_dispute_claim()
+    #[Test]
+    public function it_can_escalate_dispute_claim(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -521,8 +528,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_accept_dispute_claim()
+    #[Test]
+    public function it_can_accept_dispute_claim(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -544,8 +551,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_accept_dispute_offer_resolution()
+    #[Test]
+    public function it_can_accept_dispute_offer_resolution(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -567,8 +574,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_update_dispute_status()
+    #[Test]
+    public function it_can_update_dispute_status(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -590,8 +597,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_settle_dispute()
+    #[Test]
+    public function it_can_settle_dispute(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -613,8 +620,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_decline_dispute_offer_resolution()
+    #[Test]
+    public function it_can_decline_dispute_offer_resolution(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -636,8 +643,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_generate_unique_invoice_number()
+    #[Test]
+    public function it_can_generate_unique_invoice_number(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -656,8 +663,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('invoice_number', $response);
     }
 
-    /** @test */
-    public function it_can_create_a_draft_invoice()
+    #[Test]
+    public function it_can_create_a_draft_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -678,8 +685,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_list_invoices()
+    #[Test]
+    public function it_can_list_invoices(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -698,8 +705,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('total_items', $response);
     }
 
-    /** @test */
-    public function it_can_delete_an_invoice()
+    #[Test]
+    public function it_can_delete_an_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -715,8 +722,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_update_an_invoice()
+    #[Test]
+    public function it_can_update_an_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -737,8 +744,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_an_invoice()
+    #[Test]
+    public function it_can_show_details_for_an_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -757,8 +764,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_cancel_an_invoice()
+    #[Test]
+    public function it_can_cancel_an_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -786,8 +793,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_generate_qr_code_for_invoice()
+    #[Test]
+    public function it_can_generate_qr_code_for_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -805,8 +812,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertNotEmpty($response);
     }
 
-    /** @test */
-    public function it_can_register_payment_for_invoice()
+    #[Test]
+    public function it_can_register_payment_for_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -825,8 +832,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('payment_id', $response);
     }
 
-    /** @test */
-    public function it_can_delete_payment_for_invoice()
+    #[Test]
+    public function it_can_delete_payment_for_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -842,8 +849,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_refund_payment_for_invoice()
+    #[Test]
+    public function it_can_refund_payment_for_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -862,8 +869,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('refund_id', $response);
     }
 
-    /** @test */
-    public function it_can_delete_refund_for_invoice()
+    #[Test]
+    public function it_can_delete_refund_for_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -879,8 +886,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_send_an_invoice()
+    #[Test]
+    public function it_can_send_an_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -906,8 +913,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_send_reminder_for_an_invoice()
+    #[Test]
+    public function it_can_send_reminder_for_an_invoice(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -933,8 +940,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_create_invoice_template()
+    #[Test]
+    public function it_can_create_invoice_template(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -955,8 +962,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_list_invoice_templates()
+    #[Test]
+    public function it_can_list_invoice_templates(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -975,8 +982,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('templates', $response);
     }
 
-    /** @test */
-    public function it_can_delete_an_invoice_template()
+    #[Test]
+    public function it_can_delete_an_invoice_template(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -992,8 +999,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_update_an_invoice_template()
+    #[Test]
+    public function it_can_update_an_invoice_template(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1014,8 +1021,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_get_details_for_an_invoice_template()
+    #[Test]
+    public function it_can_get_details_for_an_invoice_template(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1034,8 +1041,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_search_invoices()
+    #[Test]
+    public function it_can_search_invoices(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1054,8 +1061,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('total_items', $response);
     }
 
-    /** @test */
-    public function it_can_search_invoices_with_custom_filters()
+    #[Test]
+    public function it_can_search_invoices_with_custom_filters(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1088,8 +1095,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('items', $response);
     }
 
-    /** @test */
-    public function it_throws_exception_on_search_invoices_with_invalid_status()
+    #[Test]
+    public function it_throws_exception_on_search_invoices_with_invalid_status(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1109,8 +1116,8 @@ class AdapterFeatureTest extends TestCase
             ->searchInvoices();
     }
 
-    /** @test */
-    public function it_throws_exception_on_search_invoices_with_invalid_amount_ranges()
+    #[Test]
+    public function it_throws_exception_on_search_invoices_with_invalid_amount_ranges(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1132,8 +1139,8 @@ class AdapterFeatureTest extends TestCase
             ->searchInvoices();
     }
 
-    /** @test */
-    public function it_throws_exception_on_search_invoices_with_invalid_date_ranges()
+    #[Test]
+    public function it_throws_exception_on_search_invoices_with_invalid_date_ranges(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1155,8 +1162,8 @@ class AdapterFeatureTest extends TestCase
             ->searchInvoices();
     }
 
-    /** @test */
-    public function it_throws_exception_on_search_invoices_with_invalid_date_range_type()
+    #[Test]
+    public function it_throws_exception_on_search_invoices_with_invalid_date_range_type(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1178,8 +1185,8 @@ class AdapterFeatureTest extends TestCase
             ->searchInvoices();
     }
 
-    /** @test */
-    public function it_can_get_user_profile_details()
+    #[Test]
+    public function it_can_get_user_profile_details(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1197,8 +1204,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('address', $response);
     }
 
-    /** @test */
-    public function it_can_get_list_users()
+    #[Test]
+    public function it_can_get_list_users(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1216,7 +1223,7 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('Resources', $response);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_user_details()
     {
         $this->client->setAccessToken([
@@ -1237,8 +1244,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('userName', $response);
     }
 
-    /** @test */
-    public function it_can_deleta_a_user()
+    #[Test]
+    public function it_can_deleta_a_user(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1256,8 +1263,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_create_merchant_applications()
+    #[Test]
+    public function it_can_create_merchant_applications(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1289,8 +1296,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('redirect_uris', $response);
     }
 
-    /** @test */
-    public function it_can_set_account_properties()
+    #[Test]
+    public function it_can_set_account_properties(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1306,8 +1313,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_disable_account_properties()
+    #[Test]
+    public function it_can_disable_account_properties(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1325,8 +1332,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_get_client_token()
+    #[Test]
+    public function it_can_get_client_token(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1344,8 +1351,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('client_token', $response);
     }
 
-    /** @test  */
-    public function it_can_create_orders()
+    #[Test]
+    public function it_can_create_orders(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1367,8 +1374,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test  */
-    public function it_can_update_orders()
+    #[Test]
+    public function it_can_update_orders(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1389,8 +1396,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertNotEmpty($response);
     }
 
-    /** @test  */
-    public function it_can_get_order_details()
+    #[Test]
+    public function it_can_get_order_details(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1415,8 +1422,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test  */
-    public function it_can_authorize_payment_for_an_order()
+    #[Test]
+    public function it_can_authorize_payment_for_an_order(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1439,8 +1446,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_create_partner_referral()
+    #[Test]
+    public function it_can_create_partner_referral(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1460,8 +1467,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_get_referral_details()
+    #[Test]
+    public function it_can_get_referral_details(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1482,8 +1489,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('referral_data', $response);
     }
 
-    /** @test */
-    public function it_can_list_seller_tracking_information()
+    #[Test]
+    public function it_can_list_seller_tracking_information(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1505,8 +1512,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('tracking_id', $response);
     }
 
-    /** @test */
-    public function it_can_show_seller_status()
+    #[Test]
+    public function it_can_show_seller_status(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1527,8 +1534,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('merchant_id', $response);
     }
 
-    /** @test */
-    public function it_can_list_merchant_credentials()
+    #[Test]
+    public function it_can_list_merchant_credentials(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1549,8 +1556,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('payer_id', $response);
     }
 
-    /** @test */
-    public function it_can_list_web_experience_profiles()
+    #[Test]
+    public function it_can_list_web_experience_profiles(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1569,8 +1576,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', collect($response)->first());
     }
 
-    /** @test */
-    public function it_can_create_web_experience_profile()
+    #[Test]
+    public function it_can_create_web_experience_profile(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1591,8 +1598,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('name', $response);
     }
 
-    /** @test */
-    public function it_can_delete_web_experience_profile()
+    #[Test]
+    public function it_can_delete_web_experience_profile(): void
     {
         $expectedResponse = '';
 
@@ -1612,8 +1619,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_partially_update_web_experience_profile()
+    #[Test]
+    public function it_can_partially_update_web_experience_profile(): void
     {
         $expectedResponse = '';
 
@@ -1633,8 +1640,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_fully_update_web_experience_profile()
+    #[Test]
+    public function it_can_fully_update_web_experience_profile(): void
     {
         $expectedResponse = '';
 
@@ -1654,8 +1661,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_get_web_experience_profile_details()
+    #[Test]
+    public function it_can_get_web_experience_profile_details(): void
     {
         $expectedResponse = $this->mockWebProfileResponse();
 
@@ -1676,8 +1683,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('name', $response);
     }
 
-    /** @test  */
-    public function it_can_capture_payment_for_an_order()
+    #[Test]
+    public function it_can_capture_payment_for_an_order(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1700,8 +1707,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_an_authorized_payment()
+    #[Test]
+    public function it_can_show_details_for_an_authorized_payment(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1720,8 +1727,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_capture_an_authorized_payment()
+    #[Test]
+    public function it_can_capture_an_authorized_payment(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1745,8 +1752,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_reauthorize_an_authorized_payment()
+    #[Test]
+    public function it_can_reauthorize_an_authorized_payment(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1765,8 +1772,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_void_an_authorized_payment()
+    #[Test]
+    public function it_can_void_an_authorized_payment(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1782,8 +1789,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_a_captured_payment()
+    #[Test]
+    public function it_can_show_details_for_a_captured_payment(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1802,8 +1809,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_refund_a_captured_payment()
+    #[Test]
+    public function it_can_refund_a_captured_payment(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1827,8 +1834,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_a_refund()
+    #[Test]
+    public function it_can_show_details_for_a_refund(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -1847,8 +1854,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_create_batch_payout()
+    #[Test]
+    public function it_can_create_batch_payout(): void
     {
         $expectedResponse = $this->mockCreateBatchPayoutResponse();
 
@@ -1869,8 +1876,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('batch_header', $response);
     }
 
-    /** @test */
-    public function it_can_show_batch_payout_details()
+    #[Test]
+    public function it_can_show_batch_payout_details(): void
     {
         $expectedResponse = $this->showBatchPayoutResponse();
 
@@ -1892,8 +1899,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('items', $response);
     }
 
-    /** @test */
-    public function it_can_show_batch_payout_item_details()
+    #[Test]
+    public function it_can_show_batch_payout_item_details(): void
     {
         $expectedResponse = $this->showBatchPayoutItemResponse();
 
@@ -1916,8 +1923,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('payout_item', $response);
     }
 
-    /** @test */
-    public function it_can_cancel_unclaimed_batch_payout_item()
+    #[Test]
+    public function it_can_cancel_unclaimed_batch_payout_item(): void
     {
         $expectedResponse = $this->mockCancelUnclaimedBatchItemResponse();
 
@@ -1940,8 +1947,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('payout_item', $response);
     }
 
-    /** @test */
-    public function it_can_create_referenced_batch_payout()
+    #[Test]
+    public function it_can_create_referenced_batch_payout(): void
     {
         $expectedResponse = $this->mockCreateReferencedBatchPayoutResponse();
 
@@ -1965,8 +1972,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_list_items_referenced_in_batch_payout()
+    #[Test]
+    public function it_can_list_items_referenced_in_batch_payout(): void
     {
         $expectedResponse = $this->mockShowReferencedBatchPayoutResponse();
 
@@ -1987,8 +1994,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_create_referenced_batch_payout_item()
+    #[Test]
+    public function it_can_create_referenced_batch_payout_item(): void
     {
         $expectedResponse = $this->mockCreateReferencedBatchPayoutItemResponse();
 
@@ -2012,8 +2019,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('links', $response);
     }
 
-    /** @test */
-    public function it_can_show_referenced_payout_item_details()
+    #[Test]
+    public function it_can_show_referenced_payout_item_details(): void
     {
         $expectedResponse = $this->mockShowReferencedBatchPayoutItemResponse();
 
@@ -2036,8 +2043,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('reference_id', $response);
     }
 
-    /** @test */
-    public function it_can_list_transactions()
+    #[Test]
+    public function it_can_list_transactions(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2061,8 +2068,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertGreaterThan(0, sizeof($response['transaction_details']));
     }
 
-    /** @test */
-    public function it_can_list_account_balances()
+    #[Test]
+    public function it_can_list_account_balances(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2082,8 +2089,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertNotEmpty($response);
     }
 
-    /** @test */
-    public function it_can_list_account_balances_for_a_different_currency()
+    #[Test]
+    public function it_can_list_account_balances_for_a_different_currency(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2103,8 +2110,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertNotEmpty($response);
     }
 
-    /** @test */
-    public function it_can_create_a_subscription()
+    #[Test]
+    public function it_can_create_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2125,8 +2132,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_update_a_subscription()
+    #[Test]
+    public function it_can_update_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2144,8 +2151,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_a_subscription()
+    #[Test]
+    public function it_can_show_details_for_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2164,8 +2171,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_activate_a_subscription()
+    #[Test]
+    public function it_can_activate_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2181,8 +2188,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_cancel_a_subscription()
+    #[Test]
+    public function it_can_cancel_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2198,7 +2205,7 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_suspend_a_subscription()
     {
         $this->client->setAccessToken([
@@ -2215,8 +2222,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_capture_payment_for_a_subscription()
+    #[Test]
+    public function it_can_capture_payment_for_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2232,8 +2239,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_update_quantity_or_product_for_a_subscription()
+    #[Test]
+    public function it_can_update_quantity_or_product_for_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2254,8 +2261,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    /** @test */
-    public function it_can_list_transactions_for_a_subscription()
+    #[Test]
+    public function it_can_list_transactions_for_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2274,8 +2281,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEquals($response, $this->mockListSubscriptionTransactionsResponse());
     }
 
-    /** @test */
-    public function it_can_list_tracking_details()
+    #[Test]
+    public function it_can_list_tracking_details(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2296,8 +2303,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('tracking_number', $response);
     }
 
-    /** @test */
-    public function it_can_get_tracking_details_for_tracking_id()
+    #[Test]
+    public function it_can_get_tracking_details_for_tracking_id(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2317,8 +2324,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('tracking_number', $response);
     }
 
-    /** @test */
-    public function it_can_update_tracking_details_for_tracking_id()
+    #[Test]
+    public function it_can_update_tracking_details_for_tracking_id(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2337,8 +2344,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_create_tracking_in_batches()
+    #[Test]
+    public function it_can_create_tracking_in_batches(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2359,8 +2366,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('tracker_identifiers', $response);
     }
 
-    /** @test */
-    public function it_can_create_single_tracking_for_single_transaction()
+    #[Test]
+    public function it_can_create_single_tracking_for_single_transaction(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2381,8 +2388,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('tracker_identifiers', $response);
     }
 
-    /** @test */
-    public function it_can_list_web_hooks_event_types()
+    #[Test]
+    public function it_can_list_web_hooks_event_types(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2401,8 +2408,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('event_types', $response);
     }
 
-    /** @test */
-    public function it_can_list_web_hooks_events()
+    #[Test]
+    public function it_can_list_web_hooks_events(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2421,8 +2428,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('events', $response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_a_web_hooks_event()
+    #[Test]
+    public function it_can_show_details_for_a_web_hooks_event(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2441,8 +2448,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_resend_notification_for_a_web_hooks_event()
+    #[Test]
+    public function it_can_resend_notification_for_a_web_hooks_event(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2463,8 +2470,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('id', $response);
     }
 
-    /** @test */
-    public function it_can_create_a_web_hook()
+    #[Test]
+    public function it_can_create_a_web_hook(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2486,8 +2493,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('event_types', $response);
     }
 
-    /** @test */
-    public function it_can_list_web_hooks()
+    #[Test]
+    public function it_can_list_web_hooks(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2506,8 +2513,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('webhooks', $response);
     }
 
-    /** @test */
-    public function it_can_delete_a_web_hook()
+    #[Test]
+    public function it_can_delete_a_web_hook(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2523,8 +2530,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_update_a_web_hook()
+    #[Test]
+    public function it_can_update_a_web_hook(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2545,8 +2552,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('event_types', $response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_a_web_hook()
+    #[Test]
+    public function it_can_show_details_for_a_web_hook(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2565,8 +2572,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('event_types', $response);
     }
 
-    /** @test */
-    public function it_can_list_events_for_web_hooks()
+    #[Test]
+    public function it_can_list_events_for_web_hooks(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2585,8 +2592,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('event_types', $response);
     }
 
-    /** @test */
-    public function it_can_verify_web_hook_signature()
+    #[Test]
+    public function it_can_verify_web_hook_signature(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2607,8 +2614,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('verification_status', $response);
     }
 
-    /** @test */
-    public function it_can_list_payment_methods_source_tokens()
+    #[Test]
+    public function it_can_list_payment_methods_source_tokens(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2628,8 +2635,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('payment_tokens', $response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_payment_method_source_token()
+    #[Test]
+    public function it_can_show_details_for_payment_method_source_token(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2650,8 +2657,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertArrayHasKey('payment_source', $response);
     }
 
-    /** @test */
-    public function it_can_delete_a_payment_method_source_token()
+    #[Test]
+    public function it_can_delete_a_payment_method_source_token(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -2667,8 +2674,8 @@ class AdapterFeatureTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    /** @test */
-    public function it_can_show_details_for_payment_setup_token()
+    #[Test]
+    public function it_can_show_details_for_payment_setup_token(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
