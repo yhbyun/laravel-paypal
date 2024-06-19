@@ -409,7 +409,6 @@ trait Helpers
             throw new \RuntimeException(data_get($error, 'details.0.description', 'Failed to add billing plan'));
         }
         $this->billing_plan = $billingPlan;
-
     }
 
     /**
