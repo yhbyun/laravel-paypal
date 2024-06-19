@@ -14,7 +14,7 @@ class PaymentExperienceWebProfilesTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_list_web_experience_profiles()
+    public function it_can_list_web_experience_profiles(): void
     {
         $expectedResponse = $this->mockListWebProfilesResponse();
 
@@ -29,7 +29,7 @@ class PaymentExperienceWebProfilesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_web_experience_profile()
+    public function it_can_create_web_experience_profile(): void
     {
         $expectedResponse = $this->mockWebProfileResponse();
 
@@ -48,7 +48,7 @@ class PaymentExperienceWebProfilesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_web_experience_profile()
+    public function it_can_delete_web_experience_profile(): void
     {
         $expectedResponse = '';
 
@@ -65,7 +65,7 @@ class PaymentExperienceWebProfilesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_partially_update_web_experience_profile()
+    public function it_can_partially_update_web_experience_profile(): void
     {
         $expectedResponse = '';
 
@@ -82,7 +82,7 @@ class PaymentExperienceWebProfilesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_fully_update_web_experience_profile()
+    public function it_can_fully_update_web_experience_profile(): void
     {
         $expectedResponse = '';
 
@@ -99,7 +99,7 @@ class PaymentExperienceWebProfilesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_web_experience_profile_details()
+    public function it_can_get_web_experience_profile_details(): void
     {
         $expectedResponse = $this->mockWebProfileResponse();
 

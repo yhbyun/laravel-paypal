@@ -12,7 +12,7 @@ class PaymentRefundsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_show_details_for_a_refund()
+    public function it_can_show_details_for_a_refund(): void
     {
         $expectedResponse = $this->mockGetRefundDetailsResponse();
 

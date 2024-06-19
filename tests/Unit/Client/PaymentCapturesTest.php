@@ -14,7 +14,7 @@ class PaymentCapturesTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_show_details_for_a_captured_payment()
+    public function it_can_show_details_for_a_captured_payment(): void
     {
         $expectedResponse = $this->mockGetCapturedPaymentDetailsResponse();
 
@@ -33,7 +33,7 @@ class PaymentCapturesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_refund_a_captured_payment()
+    public function it_can_refund_a_captured_payment(): void
     {
         $expectedResponse = $this->mockRefundCapturedPaymentResponse();
 

@@ -14,7 +14,7 @@ class CatalogProductsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_a_product()
+    public function it_can_create_a_product(): void
     {
         $expectedResponse = $this->mockCreateCatalogProductsResponse();
 
@@ -34,7 +34,7 @@ class CatalogProductsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_products()
+    public function it_can_list_products(): void
     {
         $expectedResponse = $this->mockListCatalogProductsResponse();
 
@@ -53,7 +53,7 @@ class CatalogProductsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_a_product()
+    public function it_can_update_a_product(): void
     {
         $expectedResponse = '';
 
@@ -73,7 +73,7 @@ class CatalogProductsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_details_for_a_product()
+    public function it_can_get_details_for_a_product(): void
     {
         $expectedResponse = $this->mockGetCatalogProductsResponse();
 

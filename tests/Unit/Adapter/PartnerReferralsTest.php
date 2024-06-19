@@ -14,7 +14,7 @@ class PartnerReferralsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_partner_referral()
+    public function it_can_create_partner_referral(): void
     {
         $expectedResponse = $this->mockCreatePartnerReferralsResponse();
 
@@ -31,7 +31,7 @@ class PartnerReferralsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_referral_details()
+    public function it_can_get_referral_details(): void
     {
         $expectedResponse = $this->mockShowReferralDataResponse();
 

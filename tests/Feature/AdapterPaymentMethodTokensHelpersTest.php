@@ -17,7 +17,7 @@ class AdapterPaymentMethodTokensHelpersTest extends TestCase
     /** @var string */
     protected static $access_token = '';
 
-    /** @var \Srmklive\PayPal\Services\PayPal */
+    /** @var PayPalClient */
     protected $client;
 
     protected function setUp(): void
@@ -37,7 +37,7 @@ class AdapterPaymentMethodTokensHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_payment_token_from_a_vault_token()
+    public function it_can_create_payment_token_from_a_vault_token(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -60,7 +60,7 @@ class AdapterPaymentMethodTokensHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_payment_source_from_a_vault_token()
+    public function it_can_create_payment_source_from_a_vault_token(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -82,7 +82,7 @@ class AdapterPaymentMethodTokensHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_payment_source_from_a_credit_card()
+    public function it_can_create_payment_source_from_a_credit_card(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -104,7 +104,7 @@ class AdapterPaymentMethodTokensHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_payment_source_from_a_paypal_account()
+    public function it_can_create_payment_source_from_a_paypal_account(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -128,7 +128,7 @@ class AdapterPaymentMethodTokensHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_payment_source_from_a_venmo_account()
+    public function it_can_create_payment_source_from_a_venmo_account(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,

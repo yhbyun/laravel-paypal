@@ -16,7 +16,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     /** @var string */
     protected static $access_token = '';
 
-    /** @var \Srmklive\PayPal\Services\PayPal */
+    /** @var PayPalClient */
     protected $client;
 
     protected function setUp(): void
@@ -36,7 +36,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_monthly_subscription()
+    public function it_can_create_a_monthly_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -77,7 +77,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_daily_subscription()
+    public function it_can_create_a_daily_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -118,7 +118,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_weekly_subscription()
+    public function it_can_create_a_weekly_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -159,7 +159,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_an_annual_subscription()
+    public function it_can_create_an_annual_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -200,7 +200,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_subscription_with_custom_defined_interval()
+    public function it_can_create_a_subscription_with_custom_defined_interval(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -241,7 +241,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_when_invalid_interval_is_provided_for_creating_a_subscription()
+    public function it_throws_exception_when_invalid_interval_is_provided_for_creating_a_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -256,7 +256,53 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_subscription_without_trial()
+    public function it_throws_exception_when_get_error_for_creating_a_billing_plan(): void
+    {
+        $this->client->setAccessToken([
+            'access_token'  => self::$access_token,
+            'token_type'    => 'Bearer',
+        ]);
+
+        $this->client->setClient(
+            $this->mock_http_client(
+                $this->mockCreateCatalogProductsResponse()
+            )
+        );
+
+        $this->client = $this->client->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE');
+
+        $this->client->setClient(
+            $this->mock_http_client(
+                $this->mockCreatePlansErrorResponse()
+            )
+        );
+
+        $this->expectException(\RuntimeException::class);
+
+        $this->client = $this->client->addMonthlyPlan('Demo Plan', 'Demo Plan', 100);
+    }
+
+    /** @test */
+    public function it_throws_exception_when_get_error_for_creating_a_product(): void
+    {
+        $this->client->setAccessToken([
+            'access_token'  => self::$access_token,
+            'token_type'    => 'Bearer',
+        ]);
+
+        $this->client->setClient(
+            $this->mock_http_client(
+                $this->mockGetCatalogProductsErrorResponse()
+            )
+        );
+
+        $this->expectException(\RuntimeException::class);
+
+        $this->client = $this->client->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE');
+    }
+
+    /** @test */
+    public function it_can_create_a_subscription_without_trial(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -295,7 +341,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_subscription_by_existing_product_and_billing_plan()
+    public function it_can_create_a_subscription_by_existing_product_and_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -320,7 +366,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_daily_subscription()
+    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_daily_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -348,7 +394,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_weekly_subscription()
+    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_weekly_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -376,7 +422,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_monthly_subscription()
+    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_monthly_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -404,7 +450,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_an_annual_subscription()
+    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_an_annual_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -432,7 +478,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_subscription_with_custom_intervals()
+    public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_subscription_with_custom_intervals(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -460,7 +506,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_add_setup_fees_when_creating_subscription()
+    public function it_can_add_setup_fees_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -488,7 +534,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_add_shipping_address_when_creating_subscription()
+    public function it_can_add_shipping_address_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -515,7 +561,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_add_custom_payment_failure_threshold_value_when_creating_subscription()
+    public function it_can_add_custom_payment_failure_threshold_value_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -543,7 +589,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_tax_percentage_when_creating_subscription()
+    public function it_can_set_tax_percentage_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -564,6 +610,47 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         );
 
         $response = $this->client->setupSubscription('John Doe', 'john@example.com', $start_date);
+
+        $this->assertNotEmpty($response);
+        $this->assertArrayHasKey('id', $response);
+        $this->assertArrayHasKey('plan_id', $response);
+    }
+
+    /** @test */
+    public function it_can_create_a_subscription_with_fixed_installments(): void
+    {
+        $this->client->setAccessToken([
+            'access_token'  => self::$access_token,
+            'token_type'    => 'Bearer',
+        ]);
+
+        $this->client->setClient(
+            $this->mock_http_client(
+                $this->mockCreateCatalogProductsResponse()
+            )
+        );
+
+        $start_date = Carbon::now()->addDay()->toDateString();
+
+        $this->client = $this->client->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE');
+
+        $this->client->setClient(
+            $this->mock_http_client(
+                $this->mockCreatePlansResponse()
+            )
+        );
+
+        $this->client = $this->client->addPlanTrialPricing('DAY', 7)
+            ->addMonthlyPlan('Demo Plan', 'Demo Plan', 100, 12);
+
+        $this->client->setClient(
+            $this->mock_http_client(
+                $this->mockCreateSubscriptionResponse()
+            )
+        );
+
+        $response = $this->client->setReturnAndCancelUrl('https://example.com/paypal-success', 'https://example.com/paypal-cancel')
+            ->setupSubscription('John Doe', 'john@example.com', $start_date);
 
         $this->assertNotEmpty($response);
         $this->assertArrayHasKey('id', $response);

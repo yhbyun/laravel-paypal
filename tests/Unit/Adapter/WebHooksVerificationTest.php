@@ -14,7 +14,7 @@ class WebHooksVerificationTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_verify_web_hook_signature()
+    public function it_can_verify_web_hook_signature(): void
     {
         $expectedResponse = $this->mockVerifyWebHookSignatureResponse();
 

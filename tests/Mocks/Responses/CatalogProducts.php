@@ -119,4 +119,33 @@ trait CatalogProducts
   ]
 }', true);
     }
+
+    /**
+     * @return array
+     */
+    private function mockGetCatalogProductsErrorResponse(): array
+    {
+        return $this->jsonDecodeFunction()('{
+    "error": {
+        "name": "INVALID_REQUEST",
+        "message": "Request is not well-formed, syntactically incorrect, or violates schema.",
+        "debug_id": "b2aaac7fe91d1",
+        "details": [
+            {
+                "field": "\/type",
+                "location": "body",
+                "issue": "MISSING_REQUIRED_PARAMETER",
+                "description": "A required field is missing."
+            }
+        ],
+        "links": [
+            {
+                "href": "https:\/\/developer.paypal.com\/docs\/api\/v1\/billing\/subscriptions#INVALID_REQUEST",
+                "rel": "information_link",
+                "method": "GET"
+            }
+        ]
+    }
+}', true);
+    }
 }

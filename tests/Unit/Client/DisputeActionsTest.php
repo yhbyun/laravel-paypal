@@ -14,7 +14,7 @@ class DisputeActionsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_accept_dispute_claim()
+    public function it_can_accept_dispute_claim(): void
     {
         $expectedResponse = $this->mockAcceptDisputesClaimResponse();
 
@@ -34,7 +34,7 @@ class DisputeActionsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_accept_dispute_offer_resolution()
+    public function it_can_accept_dispute_offer_resolution(): void
     {
         $expectedResponse = $this->mockAcceptDisputesOfferResolutionResponse();
 
@@ -54,7 +54,7 @@ class DisputeActionsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_acknowledge_item_is_returned_for_raised_dispute()
+    public function it_can_acknowledge_item_is_returned_for_raised_dispute(): void
     {
         $expectedResponse = $this->mockAcknowledgeItemReturnedResponse();
 

@@ -5,6 +5,7 @@ namespace Feature;
 namespace Srmklive\PayPal\Tests\Feature;
 
 use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Srmklive\PayPal\Tests\MockClientClasses;
@@ -20,7 +21,7 @@ class AdapterExperienceContextTest extends TestCase
     /** @var string */
     protected static $access_token = '';
 
-    /** @var \Srmklive\PayPal\Services\PayPal */
+    /** @var PayPalClient */
     protected $client;
 
     protected function setUp(): void
@@ -40,7 +41,7 @@ class AdapterExperienceContextTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_payment_experience_context_before_performing_api_call()
+    public function it_can_set_payment_experience_context_before_performing_api_call(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,

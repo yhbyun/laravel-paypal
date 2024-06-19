@@ -14,7 +14,7 @@ class InvoicesSearchTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_search_invoices()
+    public function it_can_search_invoices(): void
     {
         $expectedResponse = $this->mockSearchInvoicesResponse();
 
@@ -29,7 +29,7 @@ class InvoicesSearchTest extends TestCase
     }
 
     /** @test */
-    public function it_can_search_invoices_with_custom_filters()
+    public function it_can_search_invoices_with_custom_filters(): void
     {
         $expectedResponse = $this->mockSearchInvoicesResponse();
 

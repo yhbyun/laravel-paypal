@@ -15,7 +15,7 @@ class AdapterBillingPlansPricingHelpersTest extends TestCase
     /** @var string */
     protected static $access_token = '';
 
-    /** @var \Srmklive\PayPal\Services\PayPal */
+    /** @var PayPalClient */
     protected $client;
 
     protected function setUp(): void
@@ -35,7 +35,7 @@ class AdapterBillingPlansPricingHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_pricing_schemes_for_a_billing_plan()
+    public function it_can_update_pricing_schemes_for_a_billing_plan(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,
@@ -56,7 +56,7 @@ class AdapterBillingPlansPricingHelpersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_custom_limits_when_listing_billing_plans()
+    public function it_can_set_custom_limits_when_listing_billing_plans(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,

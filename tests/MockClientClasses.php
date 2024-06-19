@@ -32,10 +32,7 @@ trait MockClientClasses
 
     private function mock_http_request($expectedResponse, $expectedEndpoint, $expectedParams, $expectedMethod = 'post')
     {
-        $set_method_name = 'setMethods';
-        if (strpos(phpversion(), '8.1') !== false || strpos(phpversion(), '8.2') !== false) {
-            $set_method_name = 'onlyMethods';
-        }
+        $set_method_name = ($this->setMethodsFunction() === true) ? 'onlyMethods' : 'setMethods';
 
         $mockResponse = $this->getMockBuilder(ResponseInterface::class)
             ->getMock();
@@ -56,7 +53,7 @@ trait MockClientClasses
 
     private function mock_client($expectedResponse, $expectedMethod, $token = false, $additionalMethod = null)
     {
-        $set_method_name = 'setMethods';
+        $set_method_name = ($this->setMethodsFunction() === true) ? 'onlyMethods' : 'setMethods';
 
         $methods = [$expectedMethod, 'setApiCredentials'];
         $methods[] = ($token) ? 'getAccessToken' : '';
@@ -121,5 +118,18 @@ trait MockClientClasses
             'locale'         => 'en_US',
             'validate_ssl'   => true,
         ];
+    }
+
+    protected function setMethodsFunction(): bool
+    {
+        $useOnlyMethods = false;
+
+        foreach (['8.1', '8.2', '8.3'] as $php_version) {
+            if (strpos(phpversion(), $php_version) !== false) {
+                $useOnlyMethods = true;
+            }
+        }
+
+        return $useOnlyMethods;
     }
 }

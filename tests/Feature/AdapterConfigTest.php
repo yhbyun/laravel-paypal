@@ -10,7 +10,7 @@ class AdapterConfigTest extends TestCase
 {
     use MockClientClasses;
 
-    /** @var \Srmklive\PayPal\Services\PayPal */
+    /** @var PayPalClient */
     protected $client;
 
     protected function setUp(): void
@@ -21,7 +21,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_if_invalid_credentials_are_provided()
+    public function it_throws_exception_if_invalid_credentials_are_provided(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Invalid configuration provided. Please provide valid configuration for PayPal API. You can also refer to the documentation at https://srmklive.github.io/laravel-paypal/docs.html to setup correct configuration.');
@@ -30,7 +30,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_if_invalid_mode_is_provided()
+    public function it_throws_exception_if_invalid_mode_is_provided(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Invalid configuration provided. Please provide valid configuration for PayPal API. You can also refer to the documentation at https://srmklive.github.io/laravel-paypal/docs.html to setup correct configuration.');
@@ -42,7 +42,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_if_empty_credentials_are_provided()
+    public function it_throws_exception_if_empty_credentials_are_provided(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Invalid configuration provided. Please provide valid configuration for PayPal API. You can also refer to the documentation at https://srmklive.github.io/laravel-paypal/docs.html to setup correct configuration.');
@@ -54,7 +54,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_if_credentials_items_are_not_provided()
+    public function it_throws_exception_if_credentials_items_are_not_provided(): void
     {
         $item = 'client_id';
 
@@ -68,13 +68,13 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_can_take_valid_credentials_and_return_the_client_instance()
+    public function it_can_take_valid_credentials_and_return_the_client_instance(): void
     {
         $this->assertInstanceOf(PayPalClient::class, $this->client);
     }
 
     /** @test */
-    public function it_throws_exception_if_invalid_credentials_are_provided_through_method()
+    public function it_throws_exception_if_invalid_credentials_are_provided_through_method(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -82,7 +82,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_the_client_instance_if_valid_credentials_are_provided_through_method()
+    public function it_returns_the_client_instance_if_valid_credentials_are_provided_through_method(): void
     {
         $this->client->setApiCredentials($this->getApiCredentials());
 
@@ -90,7 +90,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_if_invalid_currency_is_set()
+    public function it_throws_exception_if_invalid_currency_is_set(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -100,7 +100,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_a_valid_currency()
+    public function it_can_set_a_valid_currency(): void
     {
         $this->client->setCurrency('EUR');
 
@@ -109,7 +109,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_a_request_header()
+    public function it_can_set_a_request_header(): void
     {
         $this->client->setRequestHeader('Prefer', 'return=representation');
 
@@ -118,7 +118,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_can_set_multiple_request_headers()
+    public function it_can_set_multiple_request_headers(): void
     {
         $this->client->setRequestHeaders([
             'PayPal-Request-Id'             => 'some-request-id',
@@ -130,7 +130,7 @@ class AdapterConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_throws_exception_if_options_header_not_set()
+    public function it_throws_exception_if_options_header_not_set(): void
     {
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionCode('0');

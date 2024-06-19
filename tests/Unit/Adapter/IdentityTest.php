@@ -14,7 +14,7 @@ class IdentityTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_get_user_profile_details()
+    public function it_can_get_user_profile_details(): void
     {
         $expectedResponse = $this->mockShowProfileInfoResponse();
 

@@ -14,7 +14,7 @@ class WebHooksTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_a_web_hook()
+    public function it_can_create_a_web_hook(): void
     {
         $expectedResponse = $this->mockCreateWebHookResponse();
 
@@ -32,7 +32,7 @@ class WebHooksTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_web_hooks()
+    public function it_can_list_web_hooks(): void
     {
         $expectedResponse = $this->mockListWebHookResponse();
 
@@ -47,7 +47,7 @@ class WebHooksTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_a_web_hook()
+    public function it_can_delete_a_web_hook(): void
     {
         $expectedResponse = '';
 
@@ -62,7 +62,7 @@ class WebHooksTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_a_web_hook()
+    public function it_can_update_a_web_hook(): void
     {
         $expectedResponse = $this->mockUpdateWebHookResponse();
 
@@ -79,7 +79,7 @@ class WebHooksTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_details_for_a_web_hook()
+    public function it_can_show_details_for_a_web_hook(): void
     {
         $expectedResponse = $this->mockGetWebHookResponse();
 
@@ -94,7 +94,7 @@ class WebHooksTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_web_hooks_events()
+    public function it_can_list_web_hooks_events(): void
     {
         $expectedResponse = $this->mockListWebHookEventsResponse();
 

@@ -12,7 +12,7 @@ class WebHooksEventsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_list_web_hooks_event_types()
+    public function it_can_list_web_hooks_event_types(): void
     {
         $expectedResponse = $this->mockListWebHookEventsTypesResponse();
 
@@ -27,7 +27,7 @@ class WebHooksEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_web_hooks_events()
+    public function it_can_list_web_hooks_events(): void
     {
         $expectedResponse = $this->mockWebHookEventsListResponse();
 
@@ -42,7 +42,7 @@ class WebHooksEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_details_for_a_web_hooks_event()
+    public function it_can_show_details_for_a_web_hooks_event(): void
     {
         $expectedResponse = $this->mockGetWebHookEventResponse();
 
@@ -57,7 +57,7 @@ class WebHooksEventsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_resend_notification_for_a_web_hooks_event()
+    public function it_can_resend_notification_for_a_web_hooks_event(): void
     {
         $expectedResponse = $this->mockResendWebHookEventNotificationResponse();
 

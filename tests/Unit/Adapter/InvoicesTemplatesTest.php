@@ -14,7 +14,7 @@ class InvoicesTemplatesTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_invoice_template()
+    public function it_can_create_invoice_template(): void
     {
         $expectedResponse = $this->mockCreateInvoiceTemplateResponse();
 
@@ -31,7 +31,7 @@ class InvoicesTemplatesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_invoice_templates()
+    public function it_can_list_invoice_templates(): void
     {
         $expectedResponse = $this->mockListInvoiceTemplateResponse();
 
@@ -46,7 +46,7 @@ class InvoicesTemplatesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_an_invoice_template()
+    public function it_can_delete_an_invoice_template(): void
     {
         $expectedResponse = '';
 
@@ -61,7 +61,7 @@ class InvoicesTemplatesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_an_invoice_template()
+    public function it_can_update_an_invoice_template(): void
     {
         $expectedResponse = $this->mockUpdateInvoiceTemplateResponse();
 
@@ -78,7 +78,7 @@ class InvoicesTemplatesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_details_for_an_invoice_template()
+    public function it_can_get_details_for_an_invoice_template(): void
     {
         $expectedResponse = $this->mockGetInvoiceTemplateResponse();
 

@@ -14,7 +14,7 @@ class ReportingTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_list_transactions()
+    public function it_can_list_transactions(): void
     {
         $expectedResponse = $this->mockListTransactionsResponse();
 
@@ -34,7 +34,7 @@ class ReportingTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_balances()
+    public function it_can_list_balances(): void
     {
         $expectedResponse = $this->mockListBalancesResponse();
 

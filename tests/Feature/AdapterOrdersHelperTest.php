@@ -18,7 +18,7 @@ class AdapterOrdersHelperTest extends TestCase
     /** @var string */
     protected static $access_token = '';
 
-    /** @var \Srmklive\PayPal\Services\PayPal */
+    /** @var PayPalClient */
     protected $client;
 
     protected function setUp(): void
@@ -38,7 +38,7 @@ class AdapterOrdersHelperTest extends TestCase
     }
 
     /** @test */
-    public function it_can_confirm_payment_for_an_order()
+    public function it_can_confirm_payment_for_an_order(): void
     {
         $this->client->setAccessToken([
             'access_token'  => self::$access_token,

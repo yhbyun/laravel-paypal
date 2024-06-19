@@ -14,7 +14,7 @@ class BillingPlansTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_a_billing_plan()
+    public function it_can_create_a_billing_plan(): void
     {
         $expectedResponse = $this->mockCreatePlansResponse();
 
@@ -34,7 +34,7 @@ class BillingPlansTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_billing_plans()
+    public function it_can_list_billing_plans(): void
     {
         $expectedResponse = $this->mockListPlansResponse();
 
@@ -53,7 +53,7 @@ class BillingPlansTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_a_billing_plan()
+    public function it_can_update_a_billing_plan(): void
     {
         $expectedResponse = '';
 
@@ -73,7 +73,7 @@ class BillingPlansTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_details_for_a_billing_plan()
+    public function it_can_show_details_for_a_billing_plan(): void
     {
         $expectedResponse = $this->mockGetPlansResponse();
 
@@ -92,7 +92,7 @@ class BillingPlansTest extends TestCase
     }
 
     /** @test */
-    public function it_can_activate_a_billing_plan()
+    public function it_can_activate_a_billing_plan(): void
     {
         $expectedResponse = '';
 
@@ -111,7 +111,7 @@ class BillingPlansTest extends TestCase
     }
 
     /** @test */
-    public function it_can_deactivate_a_billing_plan()
+    public function it_can_deactivate_a_billing_plan(): void
     {
         $expectedResponse = '';
 
@@ -130,7 +130,7 @@ class BillingPlansTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_pricing_for_a_billing_plan()
+    public function it_can_update_pricing_for_a_billing_plan(): void
     {
         $expectedResponse = '';
 

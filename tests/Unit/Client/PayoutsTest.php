@@ -14,7 +14,7 @@ class PayoutsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_batch_payout()
+    public function it_can_create_batch_payout(): void
     {
         $expectedResponse = $this->mockCreateBatchPayoutResponse();
 
@@ -34,7 +34,7 @@ class PayoutsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_batch_payout_details()
+    public function it_can_show_batch_payout_details(): void
     {
         $expectedResponse = $this->showBatchPayoutResponse();
 
@@ -53,7 +53,7 @@ class PayoutsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_batch_payout_item_details()
+    public function it_can_show_batch_payout_item_details(): void
     {
         $expectedResponse = $this->showBatchPayoutItemResponse();
 
@@ -72,7 +72,7 @@ class PayoutsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_cancel_unclaimed_batch_payout_item()
+    public function it_can_cancel_unclaimed_batch_payout_item(): void
     {
         $expectedResponse = $this->mockCancelUnclaimedBatchItemResponse();
 

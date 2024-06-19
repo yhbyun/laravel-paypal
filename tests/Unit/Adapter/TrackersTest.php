@@ -14,7 +14,7 @@ class TrackersTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_get_tracking_details_for_tracking_id()
+    public function it_can_get_tracking_details_for_tracking_id(): void
     {
         $expectedResponse = $this->mockGetTrackingDetailsResponse();
 
@@ -31,7 +31,7 @@ class TrackersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_tracking_details_for_tracking_id()
+    public function it_can_update_tracking_details_for_tracking_id(): void
     {
         $expectedResponse = '';
 
@@ -50,7 +50,7 @@ class TrackersTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_tracking_in_batches()
+    public function it_can_create_tracking_in_batches(): void
     {
         $expectedResponse = $this->mockCreateTrackinginBatchesResponse();
 

@@ -12,7 +12,7 @@ class PaymentAuthorizationsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_show_details_for_an_authorized_payment()
+    public function it_can_show_details_for_an_authorized_payment(): void
     {
         $expectedResponse = $this->mockGetAuthorizedPaymentDetailsResponse();
 
@@ -27,7 +27,7 @@ class PaymentAuthorizationsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_capture_an_authorized_payment()
+    public function it_can_capture_an_authorized_payment(): void
     {
         $expectedResponse = $this->mockCaptureAuthorizedPaymentResponse();
 
@@ -47,7 +47,7 @@ class PaymentAuthorizationsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_reauthorize_an_authorized_payment()
+    public function it_can_reauthorize_an_authorized_payment(): void
     {
         $expectedResponse = $this->mockReAuthorizeAuthorizedPaymentResponse();
 
@@ -62,7 +62,7 @@ class PaymentAuthorizationsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_void_an_authorized_payment()
+    public function it_can_void_an_authorized_payment(): void
     {
         $expectedResponse = '';
 

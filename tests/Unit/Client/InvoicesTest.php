@@ -14,7 +14,7 @@ class InvoicesTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_generate_unique_invoice_number()
+    public function it_can_generate_unique_invoice_number(): void
     {
         $expectedResponse = $this->mockGenerateInvoiceNumberResponse();
 
@@ -33,7 +33,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_draft_invoice()
+    public function it_can_create_a_draft_invoice(): void
     {
         $expectedResponse = $this->mockCreateInvoicesResponse();
 
@@ -53,7 +53,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_current_invoices()
+    public function it_can_list_current_invoices(): void
     {
         $expectedResponse = $this->mockListInvoicesResponse();
 
@@ -72,7 +72,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_an_invoice()
+    public function it_can_delete_an_invoice(): void
     {
         $expectedResponse = '';
 
@@ -91,7 +91,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_an_invoice()
+    public function it_can_update_an_invoice(): void
     {
         $expectedResponse = $this->mockUpdateInvoicesResponse();
 
@@ -111,7 +111,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_details_for_an_invoice()
+    public function it_can_show_details_for_an_invoice(): void
     {
         $expectedResponse = $this->mockGetInvoicesResponse();
 
@@ -130,7 +130,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_cancel_an_invoice()
+    public function it_can_cancel_an_invoice(): void
     {
         $expectedResponse = '';
 
@@ -150,7 +150,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_generate_qr_code_for_invoice()
+    public function it_can_generate_qr_code_for_invoice(): void
     {
         $expectedResponse = $this->mockGenerateInvoiceNumberResponse();
 
@@ -170,7 +170,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_register_payment_for_invoice()
+    public function it_can_register_payment_for_invoice(): void
     {
         $expectedResponse = $this->mockInvoiceRegisterPaymentResponse();
 
@@ -190,7 +190,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_payment_for_invoice()
+    public function it_can_delete_payment_for_invoice(): void
     {
         $expectedResponse = '';
 
@@ -209,7 +209,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_refund_payment_for_invoice()
+    public function it_can_refund_payment_for_invoice(): void
     {
         $expectedResponse = $this->mockInvoiceRefundPaymentResponse();
 
@@ -229,7 +229,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_refund_for_invoice()
+    public function it_can_delete_refund_for_invoice(): void
     {
         $expectedResponse = '';
 
@@ -248,7 +248,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_send_an_invoice()
+    public function it_can_send_an_invoice(): void
     {
         $expectedResponse = '';
 
@@ -268,7 +268,7 @@ class InvoicesTest extends TestCase
     }
 
     /** @test */
-    public function it_can_send_reminder_for_an_invoice()
+    public function it_can_send_reminder_for_an_invoice(): void
     {
         $expectedResponse = '';
 

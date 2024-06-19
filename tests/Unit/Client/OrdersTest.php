@@ -14,7 +14,7 @@ class OrdersTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_an_order()
+    public function it_can_create_an_order(): void
     {
         $expectedResponse = $this->mockCreateOrdersResponse();
 

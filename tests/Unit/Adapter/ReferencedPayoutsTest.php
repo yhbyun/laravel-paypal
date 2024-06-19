@@ -14,7 +14,7 @@ class ReferencedPayoutsTest extends TestCase
     use MockResponsePayloads;
 
     /** @test */
-    public function it_can_create_referenced_batch_payout()
+    public function it_can_create_referenced_batch_payout(): void
     {
         $expectedResponse = $this->mockCreateReferencedBatchPayoutResponse();
 
@@ -36,7 +36,7 @@ class ReferencedPayoutsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_list_items_referenced_in_batch_payout()
+    public function it_can_list_items_referenced_in_batch_payout(): void
     {
         $expectedResponse = $this->mockShowReferencedBatchPayoutResponse();
 
@@ -53,7 +53,7 @@ class ReferencedPayoutsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_referenced_batch_payout_item()
+    public function it_can_create_referenced_batch_payout_item(): void
     {
         $expectedResponse = $this->mockCreateReferencedBatchPayoutItemResponse();
 
@@ -75,7 +75,7 @@ class ReferencedPayoutsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_referenced_payout_item_details()
+    public function it_can_show_referenced_payout_item_details(): void
     {
         $expectedResponse = $this->mockShowReferencedBatchPayoutItemResponse();
 

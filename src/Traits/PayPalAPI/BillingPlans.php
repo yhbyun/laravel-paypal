@@ -32,10 +32,6 @@ trait BillingPlans
     /**
      * List all billing plans.
      *
-     * @param int  $page
-     * @param int  $size
-     * @param bool $totals
-     *
      * @throws \Throwable
      *
      * @return array|\Psr\Http\Message\StreamInterface|string
