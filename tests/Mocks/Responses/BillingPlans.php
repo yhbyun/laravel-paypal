@@ -280,7 +280,7 @@ trait BillingPlans
      */
     private function mockCreatePlansErrorResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
     "error": {
         "name" : "UNPROCESSABLE_ENTITY",
         "message" : "The requested action could not be performed, semantically incorrect, or failed business validation.",

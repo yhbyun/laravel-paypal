@@ -125,7 +125,7 @@ trait CatalogProducts
      */
     private function mockGetCatalogProductsErrorResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
     "error": {
         "name": "INVALID_REQUEST",
         "message": "Request is not well-formed, syntactically incorrect, or violates schema.",

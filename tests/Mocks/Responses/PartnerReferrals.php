@@ -345,7 +345,7 @@ trait PartnerReferrals
 
     private function mockListSellerTrackingInformationResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
           "merchant_id": "8LQLM2ML4ZTYU",
           "tracking_id": "merchantref1",
           "links": [
@@ -361,7 +361,7 @@ trait PartnerReferrals
 
     private function mockShowSellerStatusResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
           "merchant_id": "8LQLM2ML4ZTYU",
           "products": [
             {
@@ -493,7 +493,7 @@ trait PartnerReferrals
 
     private function mockListMerchantCredentialsResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
           "client_id": "Ab27r3fkrQezHdcPrn2b2SYzPEldXx2dWgv76btVfI-eYF8KRAd2WxXAZyb0ETygSNeHBthzlxjlQ_qw",
           "client_secret": "EAcTvpnDHZf4icl_2MPnt2gRpOxHVtaQJChWU3PrRbYR4uyvUXV6h4DWQjm7XOfdnk_OrEEWdxY2eUG3",
           "payer_id": "QVG98CUNMS2PY"

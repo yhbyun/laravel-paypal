@@ -13,10 +13,10 @@ class AdapterBillingPlansPricingHelpersTest extends TestCase
     use MockResponsePayloads;
 
     /** @var string */
-    protected static string $access_token = '';
+    protected static $access_token = '';
 
     /** @var PayPalClient */
-    protected PayPalClient $client;
+    protected $client;
 
     protected function setUp(): void
     {
