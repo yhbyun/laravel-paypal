@@ -7,19 +7,21 @@ use GuzzleHttp\Handler\MockHandler as HttpMockHandler;
 use GuzzleHttp\HandlerStack as HttpHandlerStack;
 use GuzzleHttp\Psr7\Response as HttpResponse;
 use GuzzleHttp\Psr7\Stream as HttpStream;
-use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use Srmklive\PayPal\Traits\JsonEncodeDecodeSelector;
 
 trait MockClientClasses
 {
+    use JsonEncodeDecodeSelector;
+
     private function mock_http_client($response): HttpClient
     {
         $mock = new HttpMockHandler([
             new HttpResponse(
                 200,
                 [],
-                ($response === false) ? '' : Utils::jsonEncode($response)
+                ($response === false) ? '' : $this->jsonEncodeFunction()($response)
             ),
         ]);
 
@@ -55,7 +57,7 @@ trait MockClientClasses
 
         $methods = [$expectedMethod, 'setApiCredentials'];
         $methods[] = ($token) ? 'getAccessToken' : '';
-        $methods[] = isset($additionalMethod) ? $additionalMethod : '';
+        $methods[] = $additionalMethod ?? '';
 
         $mockClient = $this->getMockBuilder(PayPalClient::class)
             ->{$set_method_name}(array_filter($methods))
@@ -70,6 +72,9 @@ trait MockClientClasses
             $mockClient->expects($this->any())
             ->method($additionalMethod);
         }
+
+        $mockClient->expects($this->exactly(1))
+            ->method('setApiCredentials');
 
         $mockClient->expects($this->exactly(1))
             ->method('setApiCredentials');

@@ -2,8 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Client;
 
-use GuzzleHttp\Utils;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -15,7 +13,7 @@ class WebHooksTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_web_hook(): void
     {
         $expectedResponse = $this->mockCreateWebHookResponse();
@@ -30,12 +28,12 @@ class WebHooksTest extends TestCase
             'json' => $this->mockCreateWebHookParams(),
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'post');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'post');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->post($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->post($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_web_hooks(): void
     {
         $expectedResponse = $this->mockListWebHookResponse();
@@ -49,12 +47,12 @@ class WebHooksTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_delete_a_web_hook(): void
     {
         $expectedResponse = '';
@@ -68,12 +66,12 @@ class WebHooksTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'delete');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'delete');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->delete($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->delete($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_update_a_web_hook(): void
     {
         $expectedResponse = $this->mockUpdateWebHookResponse();
@@ -88,12 +86,12 @@ class WebHooksTest extends TestCase
             'json' => $this->mockUpdateWebHookParams(),
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'patch');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'patch');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->patch($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->patch($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_show_details_for_a_web_hook(): void
     {
         $expectedResponse = $this->mockGetWebHookResponse();
@@ -107,12 +105,12 @@ class WebHooksTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_web_hooks_events(): void
     {
         $expectedResponse = $this->mockListWebHookEventsResponse();
@@ -126,8 +124,8 @@ class WebHooksTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 }

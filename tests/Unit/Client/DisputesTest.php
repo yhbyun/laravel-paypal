@@ -2,8 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Client;
 
-use GuzzleHttp\Utils;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -15,7 +13,7 @@ class DisputesTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_list_disputes(): void
     {
         $expectedResponse = $this->mockListDisputesResponse();
@@ -29,12 +27,12 @@ class DisputesTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_partially_update_a_dispute(): void
     {
         $expectedResponse = '';
@@ -49,12 +47,12 @@ class DisputesTest extends TestCase
             'json' => $this->updateDisputeParams(),
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'patch');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'patch');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->patch($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->patch($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_get_details_for_a_dispute(): void
     {
         $expectedResponse = $this->mockGetDisputesResponse();
@@ -68,8 +66,8 @@ class DisputesTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 }

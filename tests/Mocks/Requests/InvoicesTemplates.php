@@ -2,8 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Mocks\Requests;
 
-use GuzzleHttp\Utils;
-
 trait InvoicesTemplates
 {
     /**
@@ -11,7 +9,7 @@ trait InvoicesTemplates
      */
     private function mockCreateInvoiceTemplateParams(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "default_template": true,
   "template_info": {
     "configuration": {
@@ -241,7 +239,7 @@ trait InvoicesTemplates
      */
     private function mockUpdateInvoiceTemplateParams(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "default_template": true,
   "template_info": {
     "configuration": {

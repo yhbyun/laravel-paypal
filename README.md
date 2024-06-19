@@ -108,6 +108,44 @@ By default, the currency used is `USD`. If you wish to change it, you may call `
 $provider->setCurrency('EUR');
 ```
 
+## Create Recurring Daily Subscription
+
+```php
+$response = $provider->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE')
+            ->addSubscriptionTrialPricing('DAY', 7)
+            ->addDailyPlan('Demo Plan', 'Demo Plan', 1.50)
+            ->setupSubscription('John Doe', 'john@example.com', '2021-12-10') ;
+```
+
+## Create Recurring Weekly Subscription
+
+```php
+$response = $provider->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE')
+            ->addSubscriptionTrialPricing('DAY', 7)
+            ->addWeeklyPlan('Demo Plan', 'Demo Plan', 30)
+            ->setupSubscription('John Doe', 'john@example.com', '2021-12-10') ;
+```
+
+## Create Recurring Monthly Subscription
+
+```php
+$response = $provider->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE')
+            ->addSubscriptionTrialPricing('DAY', 7)
+            ->addMonthlyPlan('Demo Plan', 'Demo Plan', 100)
+            ->setupSubscription('John Doe', 'john@example.com', '2021-12-10') ;
+```
+
+## Create Recurring Annual Subscription
+
+```php
+$response = $provider->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE')
+            ->addSubscriptionTrialPricing('DAY', 7)
+            ->addAnnualPlan('Demo Plan', 'Demo Plan', 600)
+            ->setupSubscription('John Doe', 'john@example.com', '2021-12-10') ;
+```
+
+## Create Subscription by Existing Product & Billing Plan
+
 <a name="usage-helpers"></a>
 ## Helper Methods
 

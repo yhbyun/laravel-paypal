@@ -2,8 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Mocks\Responses;
 
-use GuzzleHttp\Utils;
-
 trait ReferencedPayouts
 {
     /**
@@ -11,7 +9,7 @@ trait ReferencedPayouts
      */
     private function mockCreateReferencedBatchPayoutResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "links": [
     {
       "href": "https://api-m.sandbox.paypal.com/v1/payments/referenced-payouts/CDZEC5MJ8R5HY",
@@ -27,7 +25,7 @@ trait ReferencedPayouts
      */
     private function mockShowReferencedBatchPayoutResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "referenced_payouts": [
     {
       "item_id": "dVeQhMc5Ck5WPw2gWYDLzh3qM2Dp1XbRlZb9fDouzLzDhx1eMYYTFe3syHEKKx4=",
@@ -93,7 +91,7 @@ trait ReferencedPayouts
      */
     private function mockCreateReferencedBatchPayoutItemResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "item_id": "SOMEITEMID",
   "links": [
     {
@@ -110,7 +108,7 @@ trait ReferencedPayouts
      */
     private function mockShowReferencedBatchPayoutItemResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "item_id": "SOMEITEMID",
   "processing_state": {
     "status": "PROCESSING"

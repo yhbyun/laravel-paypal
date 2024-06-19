@@ -3,7 +3,6 @@
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
 use Carbon\Carbon;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockResponsePayloads;
@@ -13,7 +12,7 @@ class ReportingTest extends TestCase
     use MockClientClasses;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_list_transactions(): void
     {
         $expectedResponse = $this->mockListTransactionsResponse();
@@ -33,7 +32,7 @@ class ReportingTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($filters));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_balances(): void
     {
         $expectedResponse = $this->mockListBalancesResponse();

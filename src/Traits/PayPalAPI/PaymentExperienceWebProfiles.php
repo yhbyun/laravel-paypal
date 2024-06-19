@@ -31,7 +31,7 @@ trait PaymentExperienceWebProfiles
      *
      * @return array|\Psr\Http\Message\StreamInterface|string
      *
-     * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profile_create
+     * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profiles_get-list
      */
     public function createWebExperienceProfile(array $data)
     {

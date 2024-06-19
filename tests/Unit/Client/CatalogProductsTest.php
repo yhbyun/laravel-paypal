@@ -2,8 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Client;
 
-use GuzzleHttp\Utils;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -15,7 +13,7 @@ class CatalogProductsTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_product(): void
     {
         $expectedResponse = $this->mockCreateCatalogProductsResponse();
@@ -30,12 +28,12 @@ class CatalogProductsTest extends TestCase
             'json' => $this->createProductParams(),
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'post');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'post');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->post($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->post($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_products(): void
     {
         $expectedResponse = $this->mockListCatalogProductsResponse();
@@ -49,12 +47,12 @@ class CatalogProductsTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_update_a_product(): void
     {
         $expectedResponse = '';
@@ -69,12 +67,12 @@ class CatalogProductsTest extends TestCase
             'json' => $this->updateProductParams(),
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'patch');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'patch');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->patch($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->patch($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_get_details_for_a_product(): void
     {
         $expectedResponse = $this->mockGetCatalogProductsResponse();
@@ -88,8 +86,8 @@ class CatalogProductsTest extends TestCase
             ],
         ];
 
-        $mockHttpClient = $this->mock_http_request(Utils::jsonEncode($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
+        $mockHttpClient = $this->mock_http_request($this->jsonEncodeFunction()($expectedResponse), $expectedEndpoint, $expectedParams, 'get');
 
-        $this->assertEquals($expectedResponse, Utils::jsonDecode($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
+        $this->assertEquals($expectedResponse, $this->jsonDecodeFunction()($mockHttpClient->get($expectedEndpoint, $expectedParams)->getBody(), true));
     }
 }

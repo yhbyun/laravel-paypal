@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -14,7 +13,7 @@ class CatalogProductsTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_product(): void
     {
         $expectedResponse = $this->mockCreateCatalogProductsResponse();
@@ -33,7 +32,7 @@ class CatalogProductsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_products(): void
     {
         $expectedResponse = $this->mockListCatalogProductsResponse();
@@ -48,7 +47,7 @@ class CatalogProductsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}());
     }
 
-    #[Test]
+    /** @test */
     public function it_can_update_a_product(): void
     {
         $expectedResponse = '';
@@ -65,7 +64,7 @@ class CatalogProductsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}('72255d4849af8ed6e0df1173', $expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_get_details_for_a_product(): void
     {
         $expectedResponse = $this->mockGetCatalogProductsResponse();

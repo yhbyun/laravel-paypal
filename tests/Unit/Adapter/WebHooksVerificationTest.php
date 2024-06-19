@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -14,7 +13,7 @@ class WebHooksVerificationTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_verify_web_hook_signature(): void
     {
         $expectedResponse = $this->mockVerifyWebHookSignatureResponse();

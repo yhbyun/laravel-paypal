@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -14,7 +13,7 @@ class WebHooksTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_web_hook(): void
     {
         $expectedResponse = $this->mockCreateWebHookResponse();
@@ -32,7 +31,7 @@ class WebHooksTest extends TestCase
         ));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_web_hooks(): void
     {
         $expectedResponse = $this->mockListWebHookResponse();
@@ -47,7 +46,7 @@ class WebHooksTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}());
     }
 
-    #[Test]
+    /** @test */
     public function it_can_delete_a_web_hook(): void
     {
         $expectedResponse = '';
@@ -62,7 +61,7 @@ class WebHooksTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}('5GP028458E2496506'));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_update_a_web_hook(): void
     {
         $expectedResponse = $this->mockUpdateWebHookResponse();
@@ -79,7 +78,7 @@ class WebHooksTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}('0EH40505U7160970P', $expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_show_details_for_a_web_hook(): void
     {
         $expectedResponse = $this->mockGetWebHookResponse();
@@ -94,7 +93,7 @@ class WebHooksTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}('0EH40505U7160970P'));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_web_hooks_events(): void
     {
         $expectedResponse = $this->mockListWebHookEventsResponse();

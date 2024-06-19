@@ -9,7 +9,8 @@ trait BillingPlans
     /**
      * Create a new billing plan.
      *
-     * @param array $data
+     * @param array  $data
+     * @param string $request_id
      *
      * @throws \Throwable
      *

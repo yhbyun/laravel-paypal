@@ -327,14 +327,14 @@ trait Helpers
             return $this;
         }
 
-        $request_id = Str::random();
+        $this->setRequestHeader('PayPal-Request-Id', Str::random());
 
         $product = $this->createProduct([
             'name'        => $name,
             'description' => $description,
             'type'        => $type,
             'category'    => $category,
-        ], $request_id);
+        ]);
 
         if ($error = data_get($product, 'error', false)) {
             throw new \RuntimeException(data_get($error, 'details.0.description', 'Failed to add product'));
@@ -387,9 +387,9 @@ trait Helpers
      *
      * @return void
      */
-    protected function addBillingPlan(string $name, string $description, array $billing_cycles): void
+    protected function addBillingPlan(string $name, string $description, array $billing_cycles)
     {
-        $request_id = Str::random();
+        $this->setRequestHeader('PayPal-Request-Id', Str::random());
 
         $plan_params = [
             'product_id'          => $this->product['id'],
@@ -404,11 +404,12 @@ trait Helpers
             ],
         ];
 
-        $billingPlan = $this->createPlan($plan_params, $request_id);
+        $billingPlan = $this->createPlan($plan_params);
         if ($error = data_get($billingPlan, 'error', false)) {
             throw new \RuntimeException(data_get($error, 'details.0.description', 'Failed to add billing plan'));
         }
         $this->billing_plan = $billingPlan;
+
     }
 
     /**

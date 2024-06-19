@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -14,7 +13,7 @@ class PartnerReferralsTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_create_partner_referral(): void
     {
         $expectedResponse = $this->mockCreatePartnerReferralsResponse();
@@ -31,7 +30,7 @@ class PartnerReferralsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_get_referral_details(): void
     {
         $expectedResponse = $this->mockShowReferralDataResponse();

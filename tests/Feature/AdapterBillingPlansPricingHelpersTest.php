@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Feature;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Srmklive\PayPal\Tests\MockClientClasses;
@@ -35,7 +34,7 @@ class AdapterBillingPlansPricingHelpersTest extends TestCase
         parent::setUp();
     }
 
-    #[Test]
+    /** @test */
     public function it_can_update_pricing_schemes_for_a_billing_plan(): void
     {
         $this->client->setAccessToken([
@@ -56,7 +55,7 @@ class AdapterBillingPlansPricingHelpersTest extends TestCase
         $this->assertEmpty($response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_set_custom_limits_when_listing_billing_plans(): void
     {
         $this->client->setAccessToken([

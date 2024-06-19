@@ -19,10 +19,10 @@ class AdapterExperienceContextTest extends TestCase
     use MockResponsePayloads;
 
     /** @var string */
-    protected static string $access_token = '';
+    protected static $access_token = '';
 
     /** @var PayPalClient */
-    protected PayPalClient $client;
+    protected $client;
 
     protected function setUp(): void
     {
@@ -40,7 +40,7 @@ class AdapterExperienceContextTest extends TestCase
         parent::setUp();
     }
 
-    #[Test]
+    /** @test */
     public function it_can_set_payment_experience_context_before_performing_api_call(): void
     {
         $this->client->setAccessToken([

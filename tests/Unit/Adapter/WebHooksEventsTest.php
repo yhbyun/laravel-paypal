@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockResponsePayloads;
@@ -12,7 +11,7 @@ class WebHooksEventsTest extends TestCase
     use MockClientClasses;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_list_web_hooks_event_types(): void
     {
         $expectedResponse = $this->mockListWebHookEventsTypesResponse();
@@ -27,7 +26,7 @@ class WebHooksEventsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}());
     }
 
-    #[Test]
+    /** @test */
     public function it_can_list_web_hooks_events(): void
     {
         $expectedResponse = $this->mockWebHookEventsListResponse();
@@ -42,7 +41,7 @@ class WebHooksEventsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}());
     }
 
-    #[Test]
+    /** @test */
     public function it_can_show_details_for_a_web_hooks_event(): void
     {
         $expectedResponse = $this->mockGetWebHookEventResponse();
@@ -57,7 +56,7 @@ class WebHooksEventsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}('8PT597110X687430LKGECATA'));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_resend_notification_for_a_web_hooks_event(): void
     {
         $expectedResponse = $this->mockResendWebHookEventNotificationResponse();

@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -14,7 +13,7 @@ class PayoutsTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_create_batch_payout(): void
     {
         $expectedResponse = $this->mockCreateBatchPayoutResponse();
@@ -31,7 +30,7 @@ class PayoutsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_show_batch_payout_details(): void
     {
         $expectedResponse = $this->showBatchPayoutResponse();
@@ -48,7 +47,7 @@ class PayoutsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_show_batch_payout_item_details(): void
     {
         $expectedResponse = $this->showBatchPayoutItemResponse();
@@ -65,7 +64,7 @@ class PayoutsTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_cancel_unclaimed_batch_payout_item(): void
     {
         $expectedResponse = $this->mockCancelUnclaimedBatchItemResponse();

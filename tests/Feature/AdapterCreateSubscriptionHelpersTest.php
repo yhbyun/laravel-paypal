@@ -3,7 +3,6 @@
 namespace Srmklive\PayPal\Tests\Feature;
 
 use Carbon\Carbon;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Srmklive\PayPal\Tests\MockClientClasses;
@@ -15,10 +14,10 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
     use MockResponsePayloads;
 
     /** @var string */
-    protected static string $access_token = '';
+    protected static $access_token = '';
 
     /** @var PayPalClient */
-    protected PayPalClient $client;
+    protected $client;
 
     protected function setUp(): void
     {
@@ -36,7 +35,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         parent::setUp();
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_monthly_subscription(): void
     {
         $this->client->setAccessToken([
@@ -77,7 +76,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_daily_subscription(): void
     {
         $this->client->setAccessToken([
@@ -118,7 +117,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_weekly_subscription(): void
     {
         $this->client->setAccessToken([
@@ -159,7 +158,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_an_annual_subscription(): void
     {
         $this->client->setAccessToken([
@@ -200,7 +199,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_subscription_with_custom_defined_interval(): void
     {
         $this->client->setAccessToken([
@@ -241,7 +240,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_when_invalid_interval_is_provided_for_creating_a_subscription(): void
     {
         $this->client->setAccessToken([
@@ -256,7 +255,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->client = $this->client->addCustomPlan('Demo Plan', 'Demo Plan', 100, 'MONTHLY', 3);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_when_get_error_for_creating_a_billing_plan(): void
     {
         $this->client->setAccessToken([
@@ -283,7 +282,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->client = $this->client->addMonthlyPlan('Demo Plan', 'Demo Plan', 100);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_when_get_error_for_creating_a_product(): void
     {
         $this->client->setAccessToken([
@@ -302,7 +301,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->client = $this->client->addProduct('Demo Product', 'Demo Product', 'SERVICE', 'SOFTWARE');
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_subscription_without_trial(): void
     {
         $this->client->setAccessToken([
@@ -341,7 +340,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_subscription_by_existing_product_and_billing_plan(): void
     {
         $this->client->setAccessToken([
@@ -366,7 +365,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_daily_subscription(): void
     {
         $this->client->setAccessToken([
@@ -394,7 +393,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_weekly_subscription(): void
     {
         $this->client->setAccessToken([
@@ -422,7 +421,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_monthly_subscription(): void
     {
         $this->client->setAccessToken([
@@ -450,7 +449,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_an_annual_subscription(): void
     {
         $this->client->setAccessToken([
@@ -478,7 +477,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_skips_product_and_billing_plan_creation_if_already_set_when_creating_a_subscription_with_custom_intervals(): void
     {
         $this->client->setAccessToken([
@@ -506,7 +505,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_add_setup_fees_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
@@ -534,7 +533,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_add_shipping_address_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
@@ -561,7 +560,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_add_custom_payment_failure_threshold_value_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
@@ -589,7 +588,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_set_tax_percentage_when_creating_subscription(): void
     {
         $this->client->setAccessToken([
@@ -617,7 +616,7 @@ class AdapterCreateSubscriptionHelpersTest extends TestCase
         $this->assertArrayHasKey('plan_id', $response);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_a_subscription_with_fixed_installments(): void
     {
         $this->client->setAccessToken([

@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockRequestPayloads;
@@ -14,7 +13,7 @@ class TrackersTest extends TestCase
     use MockRequestPayloads;
     use MockResponsePayloads;
 
-    #[Test]
+    /** @test */
     public function it_can_get_tracking_details_for_tracking_id(): void
     {
         $expectedResponse = $this->mockGetTrackingDetailsResponse();
@@ -31,7 +30,7 @@ class TrackersTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($expectedParams));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_update_tracking_details_for_tracking_id(): void
     {
         $expectedResponse = '';
@@ -50,7 +49,7 @@ class TrackersTest extends TestCase
         $this->assertEquals($expectedResponse, $mockClient->{$expectedMethod}($expectedParams, $expectedData));
     }
 
-    #[Test]
+    /** @test */
     public function it_can_create_tracking_in_batches(): void
     {
         $expectedResponse = $this->mockCreateTrackinginBatchesResponse();

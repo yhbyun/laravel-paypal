@@ -2,8 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Mocks\Responses;
 
-use GuzzleHttp\Utils;
-
 trait Invoices
 {
     /**
@@ -11,7 +9,7 @@ trait Invoices
      */
     private function mockGenerateInvoiceNumberResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "invoice_number": "ee0044"
 }', true);
     }
@@ -21,7 +19,7 @@ trait Invoices
      */
     private function mockCreateInvoicesResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "id": "INV2-Z56S-5LLA-Q52L-CPZ5",
   "status": "DRAFT",
   "detail": {
@@ -262,7 +260,7 @@ trait Invoices
      */
     private function mockListInvoicesResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "total_items": 2,
   "total_pages": 1,
   "items": [
@@ -391,7 +389,7 @@ trait Invoices
      */
     private function mockUpdateInvoicesResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "id": "INV2-C82X-JNN9-Y6S5-CNXW",
   "status": "DRAFT",
   "detail": {
@@ -622,7 +620,7 @@ trait Invoices
      */
     private function mockGetInvoicesResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "id": "INV2-Z56S-5LLA-Q52L-CPZ5",
   "status": "DRAFT",
   "detail": {
@@ -871,7 +869,7 @@ trait Invoices
      */
     private function mockInvoiceRegisterPaymentResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "payment_id": "EXTR-86F38350LX4353815"
 }', true);
     }
@@ -881,7 +879,7 @@ trait Invoices
      */
     private function mockInvoiceRefundPaymentResponse(): array
     {
-        return Utils::jsonDecode('{
+        return $this->jsonDecodeFunction()('{
   "refund_id": "EXTR-2LG703375E477444T"
 }', true);
     }

@@ -2,10 +2,12 @@
 
 namespace Srmklive\PayPal\Services;
 
-use GuzzleHttp\Utils;
+use Srmklive\PayPal\Traits\JsonEncodeDecodeSelector;
 
 class Str extends \Illuminate\Support\Str
 {
+    use JsonEncodeDecodeSelector;
+
     /**
      * Determine if a given value is valid JSON.
      *
@@ -24,8 +26,8 @@ class Str extends \Illuminate\Support\Str
         }
 
         try {
-            Utils::jsonDecode($value, true, 512, 4194304);
-        } catch (\JsonException $jsonException) {
+            (new Str())->jsonDecodeFunction()($value, true, 512, 4194304);
+        } catch (\Exception $jsonException) {
             return false;
         }
 

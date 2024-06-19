@@ -2,7 +2,6 @@
 
 namespace Srmklive\PayPal\Tests\Feature;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Srmklive\PayPal\Tests\MockClientClasses;
@@ -12,7 +11,7 @@ class AdapterConfigTest extends TestCase
     use MockClientClasses;
 
     /** @var PayPalClient */
-    protected PayPalClient $client;
+    protected $client;
 
     protected function setUp(): void
     {
@@ -21,7 +20,7 @@ class AdapterConfigTest extends TestCase
         parent::setUp();
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_if_invalid_credentials_are_provided(): void
     {
         $this->expectException(\RuntimeException::class);
@@ -30,7 +29,7 @@ class AdapterConfigTest extends TestCase
         $this->client = new PayPalClient([]);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_if_invalid_mode_is_provided(): void
     {
         $this->expectException(\RuntimeException::class);
@@ -42,7 +41,7 @@ class AdapterConfigTest extends TestCase
         $this->client = new PayPalClient($credentials);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_if_empty_credentials_are_provided(): void
     {
         $this->expectException(\RuntimeException::class);
@@ -54,7 +53,7 @@ class AdapterConfigTest extends TestCase
         $this->client = new PayPalClient($credentials);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_if_credentials_items_are_not_provided(): void
     {
         $item = 'client_id';
@@ -68,13 +67,13 @@ class AdapterConfigTest extends TestCase
         $client = new PayPalClient($credentials);
     }
 
-    #[Test]
+    /** @test */
     public function it_can_take_valid_credentials_and_return_the_client_instance(): void
     {
         $this->assertInstanceOf(PayPalClient::class, $this->client);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_if_invalid_credentials_are_provided_through_method(): void
     {
         $this->expectException(\RuntimeException::class);
@@ -82,7 +81,7 @@ class AdapterConfigTest extends TestCase
         $this->client->setApiCredentials([]);
     }
 
-    #[Test]
+    /** @test */
     public function it_returns_the_client_instance_if_valid_credentials_are_provided_through_method(): void
     {
         $this->client->setApiCredentials($this->getApiCredentials());
@@ -90,7 +89,7 @@ class AdapterConfigTest extends TestCase
         $this->assertInstanceOf(PayPalClient::class, $this->client);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_if_invalid_currency_is_set(): void
     {
         $this->expectException(\RuntimeException::class);
@@ -100,7 +99,7 @@ class AdapterConfigTest extends TestCase
         $this->assertNotEquals('PKR', $this->client->getCurrency());
     }
 
-    #[Test]
+    /** @test */
     public function it_can_set_a_valid_currency(): void
     {
         $this->client->setCurrency('EUR');
@@ -109,7 +108,7 @@ class AdapterConfigTest extends TestCase
         $this->assertEquals('EUR', $this->client->getCurrency());
     }
 
-    #[Test]
+    /** @test */
     public function it_can_set_a_request_header(): void
     {
         $this->client->setRequestHeader('Prefer', 'return=representation');
@@ -118,7 +117,7 @@ class AdapterConfigTest extends TestCase
         $this->assertEquals($this->client->getRequestHeader('Prefer'), 'return=representation');
     }
 
-    #[Test]
+    /** @test */
     public function it_can_set_multiple_request_headers(): void
     {
         $this->client->setRequestHeaders([
@@ -130,7 +129,7 @@ class AdapterConfigTest extends TestCase
         $this->assertEquals($this->client->getRequestHeader('PayPal-Partner-Attribution-Id'), 'some-attribution-id');
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_exception_if_options_header_not_set(): void
     {
         $this->expectException(\RuntimeException::class);
