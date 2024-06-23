@@ -3,6 +3,7 @@
 namespace Srmklive\PayPal\Traits;
 
 use RuntimeException;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 trait PayPalRequest
 {
@@ -15,14 +16,14 @@ trait PayPalRequest
      *
      * @var string
      */
-    public $mode;
+    public string $mode;
 
     /**
      * PayPal access token.
      *
      * @var string
      */
-    protected $access_token;
+    protected mixed $access_token;
 
     /**
      * PayPal API configuration.
@@ -36,35 +37,35 @@ trait PayPalRequest
      *
      * @var string
      */
-    protected $currency;
+    protected string $currency;
 
     /**
      * Additional options for PayPal API request.
      *
      * @var array
      */
-    protected $options;
+    protected array $options;
 
     /**
      * Set limit to total records per API call.
      *
      * @var int
      */
-    protected $page_size = 20;
+    protected int $page_size = 20;
 
     /**
      * Set the current page for list resources API calls.
      *
-     * @var bool
+     * @var int
      */
-    protected $current_page = 1;
+    protected int $current_page = 1;
 
     /**
      * Toggle whether totals for list resources are returned after every API call.
      *
      * @var bool
      */
-    protected $show_totals = true;
+    protected bool $show_totals = true;
 
     /**
      * Set PayPal API Credentials.
@@ -99,9 +100,9 @@ trait PayPalRequest
      *
      * @throws \RuntimeException
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setCurrency(string $currency = 'USD'): \Srmklive\PayPal\Services\PayPal
+    public function setCurrency(string $currency = 'USD'): PayPalClient
     {
         // Check if provided currency is valid.
         if (!in_array($currency, $this->allowedCurrencies(), true)) {
@@ -164,9 +165,9 @@ trait PayPalRequest
      * @param string $key
      * @param string $value
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setRequestHeader(string $key, string $value): \Srmklive\PayPal\Services\PayPal
+    public function setRequestHeader(string $key, string $value): PayPalClient
     {
         $this->options['headers'][$key] = $value;
 
@@ -178,9 +179,9 @@ trait PayPalRequest
      *
      * @param array $headers
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setRequestHeaders(array $headers): \Srmklive\PayPal\Services\PayPal
+    public function setRequestHeaders(array $headers): PayPalClient
     {
         foreach ($headers as $key=>$value) {
             $this->setRequestHeader($key, $value);
@@ -286,9 +287,11 @@ trait PayPalRequest
     }
 
     /**
+     * Function to send invalid configuration exception.
+     *
      * @throws RuntimeException
      */
-    private function throwConfigurationException()
+    private function throwConfigurationException(): void
     {
         throw new RuntimeException('Invalid configuration provided. Please provide valid configuration for PayPal API. You can also refer to the documentation at https://srmklive.github.io/laravel-paypal/docs.html to setup correct configuration.');
     }
@@ -296,7 +299,7 @@ trait PayPalRequest
     /**
      * @throws RuntimeException
      */
-    private function throwInvalidEvidenceFileException()
+    private function throwInvalidEvidenceFileException(): void
     {
         throw new RuntimeException('Invalid evidence file type provided.
         1. The party can upload up to 50 MB of files per request.

@@ -2,7 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
 use Srmklive\PayPal\Traits\PayPalAPI\InvoiceSearch\Filters;
+use Throwable;
 
 trait InvoicesSearch
 {
@@ -11,13 +13,13 @@ trait InvoicesSearch
     /**
      * Search and return existing invoices.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_list
      */
-    public function searchInvoices()
+    public function searchInvoices(): StreamInterface|array|string
     {
         if (collect($this->invoice_search_filters)->count() < 1) {
             $this->invoice_search_filters = [

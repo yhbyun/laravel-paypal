@@ -9,7 +9,7 @@ class VerifyDocuments
     /**
      * @var array
      */
-    protected static $dispute_evidence_types = [
+    protected static array $dispute_evidence_types = [
         'application/pdf',
         'image/gif',
         'image/jpeg',
@@ -19,12 +19,12 @@ class VerifyDocuments
     /**
      * @var string
      */
-    protected static $dispute_evidence_file_size = 10;
+    protected static string|int $dispute_evidence_file_size = 10;
 
     /**
      * @var string
      */
-    protected static $dispute_evidences_size = 50;
+    protected static string|int $dispute_evidences_size = 50;
 
     /**
      * Get Mime type from filename.
@@ -33,7 +33,7 @@ class VerifyDocuments
      *
      * @return string
      */
-    public static function getMimeType($file)
+    public static function getMimeType(string $file): string
     {
         return MimeType::fromFilename($file);
     }
@@ -45,7 +45,7 @@ class VerifyDocuments
      *
      * @return bool
      */
-    public static function isValidEvidenceFile(array $files)
+    public static function isValidEvidenceFile(array $files): bool
     {
         $validFile = true;
         $validSize = true;
@@ -58,7 +58,7 @@ class VerifyDocuments
         foreach ($files as $file) {
             $mime_type = self::getMimeType($file);
 
-            if (!in_array($mime_type, self::$dispute_evidence_types)) {
+            if (!in_array($mime_type, self::$dispute_evidence_types, true)) {
                 $validFile = false;
                 break;
             }
@@ -73,6 +73,6 @@ class VerifyDocuments
             $total_size += $size;
         }
 
-        return (($validFile === false) || ($validSize === false)) || ($total_size > $overall_size) ? false : true;
+        return !((($validFile === false) || ($validSize === false)) || ($total_size > $overall_size));
     }
 }

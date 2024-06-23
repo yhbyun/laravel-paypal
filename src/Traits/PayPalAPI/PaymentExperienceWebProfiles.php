@@ -2,18 +2,21 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait PaymentExperienceWebProfiles
 {
     /**
      * List Web Experience Profiles.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profiles_get-list
      */
-    public function listWebExperienceProfiles()
+    public function listWebExperienceProfiles(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/payment-experience/web-profiles';
 
@@ -27,13 +30,13 @@ trait PaymentExperienceWebProfiles
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profile_create
      */
-    public function createWebExperienceProfile(array $data)
+    public function createWebExperienceProfile(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/payment-experience/web-profiles';
 
@@ -49,13 +52,13 @@ trait PaymentExperienceWebProfiles
      *
      * @param string $profile_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profile_delete
      */
-    public function deleteWebExperienceProfile(string $profile_id)
+    public function deleteWebExperienceProfile(string $profile_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payment-experience/web-profiles/{$profile_id}";
 
@@ -70,13 +73,13 @@ trait PaymentExperienceWebProfiles
      * @param string $profile_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profile_partial-update
      */
-    public function patchWebExperienceProfile(string $profile_id, array $data)
+    public function patchWebExperienceProfile(string $profile_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payment-experience/web-profiles/{$profile_id}";
 
@@ -93,13 +96,13 @@ trait PaymentExperienceWebProfiles
      * @param string $profile_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profile_update
      */
-    public function updateWebExperienceProfile(string $profile_id, array $data)
+    public function updateWebExperienceProfile(string $profile_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payment-experience/web-profiles/{$profile_id}";
 
@@ -115,13 +118,13 @@ trait PaymentExperienceWebProfiles
      *
      * @param string $profile_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-experience/v1/#web-profile_get
      */
-    public function showWebExperienceProfileDetails(string $profile_id)
+    public function showWebExperienceProfileDetails(string $profile_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payment-experience/web-profiles/{$profile_id}";
 

@@ -3,7 +3,9 @@
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\StreamInterface;
 use Srmklive\PayPal\Services\VerifyDocuments;
+use Throwable;
 
 trait DisputesActions
 {
@@ -14,13 +16,13 @@ trait DisputesActions
      * @param string $dispute_note
      * @param string $acknowledgement_type
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes-actions_acknowledge-return-item
      */
-    public function acknowledgeItemReturned(string $dispute_id, string $dispute_note, string $acknowledgement_type)
+    public function acknowledgeItemReturned(string $dispute_id, string $dispute_note, string $acknowledgement_type): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/acknowledge-return-item";
 
@@ -38,15 +40,15 @@ trait DisputesActions
      * Providence evidence in support of a dispute.
      *
      * @param string $dispute_id
-     * @param array  $file_path
+     * @param array  $files
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_provide-evidence
      */
-    public function provideDisputeEvidence(string $dispute_id, array $files)
+    public function provideDisputeEvidence(string $dispute_id, array $files): StreamInterface|array|string
     {
         if (VerifyDocuments::isValidEvidenceFile($files) === false) {
             $this->throwInvalidEvidenceFileException();
@@ -78,13 +80,13 @@ trait DisputesActions
      * @param float  $amount
      * @param string $refund_type
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_make-offer
      */
-    public function makeOfferToResolveDispute(string $dispute_id, string $dispute_note, float $amount, string $refund_type)
+    public function makeOfferToResolveDispute(string $dispute_id, string $dispute_note, float $amount, string $refund_type): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/make-offer";
 
@@ -108,13 +110,13 @@ trait DisputesActions
      * @param string $dispute_id
      * @param string $dispute_note
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_escalate
      */
-    public function escalateDisputeToClaim(string $dispute_id, string $dispute_note)
+    public function escalateDisputeToClaim(string $dispute_id, string $dispute_note): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/escalate";
 
@@ -133,13 +135,13 @@ trait DisputesActions
      * @param string $dispute_id
      * @param string $dispute_note
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_accept-offer
      */
-    public function acceptDisputeOfferResolution(string $dispute_id, string $dispute_note)
+    public function acceptDisputeOfferResolution(string $dispute_id, string $dispute_note): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/accept-offer";
 
@@ -159,13 +161,13 @@ trait DisputesActions
      * @param string $dispute_note
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_accept-claim
      */
-    public function acceptDisputeClaim(string $dispute_id, string $dispute_note, array $data = [])
+    public function acceptDisputeClaim(string $dispute_id, string $dispute_note, array $data = []): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/accept-claim";
 
@@ -185,13 +187,13 @@ trait DisputesActions
      * @param string $dispute_id
      * @param bool   $merchant
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_require-evidence
      */
-    public function updateDisputeStatus(string $dispute_id, bool $merchant = true)
+    public function updateDisputeStatus(string $dispute_id, bool $merchant = true): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/require-evidence";
 
@@ -210,13 +212,13 @@ trait DisputesActions
      * @param string $dispute_id
      * @param bool   $merchant
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_adjudicate
      */
-    public function settleDispute(string $dispute_id, bool $merchant = true)
+    public function settleDispute(string $dispute_id, bool $merchant = true): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/adjudicate";
 
@@ -235,13 +237,13 @@ trait DisputesActions
      * @param string $dispute_id
      * @param string $dispute_note
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_deny-offer
      */
-    public function declineDisputeOfferResolution(string $dispute_id, string $dispute_note)
+    public function declineDisputeOfferResolution(string $dispute_id, string $dispute_note): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}/deny-offer";
 

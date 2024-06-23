@@ -5,10 +5,11 @@ namespace Srmklive\PayPal\Facades;
 /*
  * Class Facade
  * @package Srmklive\PayPal\Facades
- * @see Srmklive\PayPal\ExpressCheckout
+ * @see Srmklive\PayPal\Services\PayPal
  */
 
 use Illuminate\Support\Facades\Facade;
+use Srmklive\PayPal\PayPalFacadeAccessor;
 
 class PayPal extends Facade
 {
@@ -17,8 +18,8 @@ class PayPal extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
-        return 'Srmklive\PayPal\PayPalFacadeAccessor';
+        return PayPalFacadeAccessor::class;
     }
 }

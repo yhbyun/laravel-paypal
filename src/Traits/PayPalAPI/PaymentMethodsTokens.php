@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait PaymentMethodsTokens
 {
     use PaymentMethodsTokens\Helpers;
@@ -11,13 +14,13 @@ trait PaymentMethodsTokens
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-tokens/v3/#payment-tokens_create
      */
-    public function createPaymentSourceToken(array $data)
+    public function createPaymentSourceToken(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v3/vault/payment-tokens';
 
@@ -35,11 +38,13 @@ trait PaymentMethodsTokens
      * @param int  $page_size
      * @param bool $totals
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @throws Throwable
+     *
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-tokens/v3/#customer_payment-tokens_get
      */
-    public function listPaymentSourceTokens(int $page = 1, int $page_size = 10, bool $totals = true)
+    public function listPaymentSourceTokens(int $page = 1, int $page_size = 10, bool $totals = true): StreamInterface|array|string
     {
         $this->apiEndPoint = "v3/vault/payment-tokens?customer_id={$this->customer_source['id']}&page={$page}&page_size={$page_size}&total_required={$totals}";
 
@@ -53,11 +58,13 @@ trait PaymentMethodsTokens
      *
      * @param string $token
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @throws Throwable
+     *
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-tokens/v3/#payment-tokens_get
      */
-    public function showPaymentSourceTokenDetails(string $token)
+    public function showPaymentSourceTokenDetails(string $token): StreamInterface|array|string
     {
         $this->apiEndPoint = "v3/vault/payment-tokens/{$token}";
 
@@ -71,11 +78,13 @@ trait PaymentMethodsTokens
      *
      * @param string $token
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @throws Throwable
+     *
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-tokens/v3/#payment-tokens_delete
      */
-    public function deletePaymentSourceToken(string $token)
+    public function deletePaymentSourceToken(string $token): StreamInterface|array|string
     {
         $this->apiEndPoint = "v3/vault/payment-tokens/{$token}";
 
@@ -89,13 +98,13 @@ trait PaymentMethodsTokens
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-tokens/v3/#setup-tokens_create
      */
-    public function createPaymentSetupToken(array $data)
+    public function createPaymentSetupToken(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v3/vault/setup-tokens';
 
@@ -111,11 +120,13 @@ trait PaymentMethodsTokens
      *
      * @param string $token
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @throws Throwable
+     *
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payment-tokens/v3/#setup-tokens_get
      */
-    public function showPaymentSetupTokenDetails(string $token)
+    public function showPaymentSetupTokenDetails(string $token): StreamInterface|array|string
     {
         $this->apiEndPoint = "v3/vault/setup-tokens/{$token}";
 

@@ -2,18 +2,21 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait Identity
 {
     /**
      * Get user profile information.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/identity/v1/#userinfo_get
      */
-    public function showProfileInfo()
+    public function showProfileInfo(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/identity/openidconnect/userinfo?schema=openid';
 
@@ -29,13 +32,13 @@ trait Identity
      *
      * @param string $field
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/identity/v2/#users_list
      */
-    public function listUsers(string $field = 'userName')
+    public function listUsers(string $field = 'userName'): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/scim/Users?filter={$field}";
 
@@ -51,13 +54,13 @@ trait Identity
      *
      * @param string $user_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/identity/v2/#users_get
      */
-    public function showUserDetails(string $user_id)
+    public function showUserDetails(string $user_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/scim/Users/{$user_id}";
 
@@ -73,13 +76,13 @@ trait Identity
      *
      * @param string $user_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/identity/v2/#users_get
      */
-    public function deleteUser(string $user_id)
+    public function deleteUser(string $user_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/scim/Users/{$user_id}";
 
@@ -101,13 +104,13 @@ trait Identity
      * @param string $application_type
      * @param string $logo_url
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/identity/v1/#applications_post
      */
-    public function createMerchantApplication(string $client_name, array $redirect_uris, array $contacts, string $payer_id, string $migrated_app, string $application_type = 'web', string $logo_url = '')
+    public function createMerchantApplication(string $client_name, array $redirect_uris, array $contacts, string $payer_id, string $migrated_app, string $application_type = 'web', string $logo_url = ''): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/identity/applications';
 
@@ -132,13 +135,13 @@ trait Identity
      * @param array  $features
      * @param string $account_property
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/identity/v1/#account-settings_post
      */
-    public function setAccountProperties(array $features, string $account_property = 'BRAINTREE_MERCHANT')
+    public function setAccountProperties(array $features, string $account_property = 'BRAINTREE_MERCHANT'): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/identity/account-settings';
 
@@ -157,13 +160,13 @@ trait Identity
      *
      * @param string $account_property
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/identity/v1/#account-settings_deactivate
      */
-    public function disableAccountProperties(string $account_property = 'BRAINTREE_MERCHANT')
+    public function disableAccountProperties(string $account_property = 'BRAINTREE_MERCHANT'): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/identity/account-settings/deactivate';
 
@@ -179,13 +182,13 @@ trait Identity
     /**
      * Get a client token.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/multiparty/checkout/advanced/integrate/#link-sampleclienttokenrequest
      */
-    public function getClientToken()
+    public function getClientToken(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/identity/generate-token';
 

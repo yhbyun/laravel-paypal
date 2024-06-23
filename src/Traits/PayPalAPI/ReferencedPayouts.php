@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait ReferencedPayouts
 {
     /**
@@ -9,13 +12,13 @@ trait ReferencedPayouts
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/referenced-payouts/v1/#referenced-payouts_create_batch
      */
-    public function createReferencedBatchPayout(array $data)
+    public function createReferencedBatchPayout(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/payments/referenced-payouts';
 
@@ -31,13 +34,13 @@ trait ReferencedPayouts
      *
      * @param string $batch_payout_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/referenced-payouts/v1/#referenced-payouts_get_batch_details
      */
-    public function listItemsReferencedInBatchPayout(string $batch_payout_id)
+    public function listItemsReferencedInBatchPayout(string $batch_payout_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payments/referenced-payouts/{$batch_payout_id}";
 
@@ -51,13 +54,13 @@ trait ReferencedPayouts
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/referenced-payouts/v1/#referenced-payouts-items_create
      */
-    public function createReferencedBatchPayoutItem(array $data)
+    public function createReferencedBatchPayoutItem(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/payments/referenced-payouts-items';
 
@@ -73,13 +76,13 @@ trait ReferencedPayouts
      *
      * @param string $payout_item_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/referenced-payouts/v1/#referenced-payouts-items_get
      */
-    public function showReferencedPayoutItemDetails(string $payout_item_id)
+    public function showReferencedPayoutItemDetails(string $payout_item_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payments/referenced-payouts-items/{$payout_item_id}";
 

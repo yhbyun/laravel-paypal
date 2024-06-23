@@ -2,17 +2,20 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI\PaymentMethodsTokens;
 
+use Psr\Http\Message\StreamInterface;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
+
 trait Helpers
 {
     /**
      * @var array
      */
-    protected $payment_source = [];
+    protected array $payment_source = [];
 
     /**
      * @var array
      */
-    protected $customer_source = [];
+    protected array $customer_source = [];
 
     /**
      * Set payment method token by token id.
@@ -20,9 +23,9 @@ trait Helpers
      * @param string $id
      * @param string $type
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setTokenSource(string $id, string $type): \Srmklive\PayPal\Services\PayPal
+    public function setTokenSource(string $id, string $type): PayPalClient
     {
         $token_source = [
             'id'    => $id,
@@ -37,9 +40,9 @@ trait Helpers
      *
      * @param string $id
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setCustomerSource(string $id): \Srmklive\PayPal\Services\PayPal
+    public function setCustomerSource(string $id): PayPalClient
     {
         $this->customer_source = [
             'id' => $id,
@@ -53,9 +56,9 @@ trait Helpers
      *
      * @param array $data
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setPaymentSourceCard(array $data): \Srmklive\PayPal\Services\PayPal
+    public function setPaymentSourceCard(array $data): PayPalClient
     {
         return $this->setPaymentSourceDetails('card', $data);
     }
@@ -65,9 +68,9 @@ trait Helpers
      *
      * @param array $data
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setPaymentSourcePayPal(array $data): \Srmklive\PayPal\Services\PayPal
+    public function setPaymentSourcePayPal(array $data): PayPalClient
     {
         return $this->setPaymentSourceDetails('paypal', $data);
     }
@@ -77,9 +80,9 @@ trait Helpers
      *
      * @param array $data
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setPaymentSourceVenmo(array $data): \Srmklive\PayPal\Services\PayPal
+    public function setPaymentSourceVenmo(array $data): PayPalClient
     {
         return $this->setPaymentSourceDetails('venmo', $data);
     }
@@ -90,9 +93,9 @@ trait Helpers
      * @param string $source
      * @param array  $data
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    protected function setPaymentSourceDetails(string $source, array $data): \Srmklive\PayPal\Services\PayPal
+    protected function setPaymentSourceDetails(string $source, array $data): PayPalClient
     {
         $this->payment_source[$source] = $data;
 
@@ -106,9 +109,10 @@ trait Helpers
      *
      * @throws \Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
+     *
      */
-    public function sendPaymentMethodRequest(bool $create_source = false)
+    public function sendPaymentMethodRequest(bool $create_source = false): StreamInterface|array|string
     {
         $token_payload = ['payment_source' => $this->payment_source];
 

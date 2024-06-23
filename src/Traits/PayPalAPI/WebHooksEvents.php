@@ -2,18 +2,21 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait WebHooksEvents
 {
     /**
      * List all events types for web hooks.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks-event-types_list
      */
-    public function listEventTypes()
+    public function listEventTypes(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/notifications/webhooks-event-types';
 
@@ -25,13 +28,13 @@ trait WebHooksEvents
     /**
      * List all events notifications for web hooks.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks-events_list
      */
-    public function listEvents()
+    public function listEvents(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/notifications/webhooks-events';
 
@@ -45,13 +48,13 @@ trait WebHooksEvents
      *
      * @param string $event_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks-events_get
      */
-    public function showEventDetails(string $event_id)
+    public function showEventDetails(string $event_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/notifications/webhooks-events/{$event_id}";
 
@@ -66,13 +69,13 @@ trait WebHooksEvents
      * @param string $event_id
      * @param array  $items
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks-events_resend
      */
-    public function resendEventNotification(string $event_id, array $items)
+    public function resendEventNotification(string $event_id, array $items): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/notifications/webhooks-events/{$event_id}/resend";
 

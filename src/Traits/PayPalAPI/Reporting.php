@@ -3,6 +3,8 @@
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
 use Carbon\Carbon;
+use Psr\Http\Message\StreamInterface;
+use Throwable;
 
 trait Reporting
 {
@@ -12,13 +14,13 @@ trait Reporting
      * @param array  $filters
      * @param string $fields
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/transaction-search/v1/#transactions_get
      */
-    public function listTransactions(array $filters, string $fields = 'all')
+    public function listTransactions(array $filters, string $fields = 'all'): StreamInterface|array|string
     {
         $filters_list = collect($filters)->isEmpty() ? '' :
             collect($filters)->map(function ($value, $key) {
@@ -38,13 +40,13 @@ trait Reporting
      * @param string $date
      * @param string $balance_currency
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/transaction-search/v1/#balances_get
      */
-    public function listBalances(string $date = '', string $balance_currency = '')
+    public function listBalances(string $date = '', string $balance_currency = ''): StreamInterface|array|string
     {
         $date = empty($date) ? Carbon::now()->toIso8601String() : Carbon::parse($date)->toIso8601String();
         $currency = empty($balance_currency) ? $this->getCurrency() : $balance_currency;

@@ -16,77 +16,77 @@ trait PayPalHttpClient
      *
      * @var HttpClient
      */
-    private $client;
+    private HttpClient $client;
 
     /**
      * Http Client configuration.
      *
      * @var array
      */
-    private $httpClientConfig;
+    private array $httpClientConfig;
 
     /**
      * PayPal API Endpoint.
      *
      * @var string
      */
-    private $apiUrl;
+    private string $apiUrl;
 
     /**
      * PayPal API Endpoint.
      *
      * @var string
      */
-    private $apiEndPoint;
+    private string $apiEndPoint;
 
     /**
      * IPN notification url for PayPal.
      *
      * @var string
      */
-    private $notifyUrl;
+    private string $notifyUrl;
 
     /**
      * Http Client request body parameter name.
      *
      * @var string
      */
-    private $httpBodyParam;
+    private string $httpBodyParam;
 
     /**
      * Default payment action for PayPal.
      *
      * @var string
      */
-    private $paymentAction;
+    private string $paymentAction;
 
     /**
      * Default locale for PayPal.
      *
      * @var string
      */
-    private $locale;
+    private string $locale;
 
     /**
      * Validate SSL details when creating HTTP client.
      *
      * @var bool
      */
-    private $validateSSL;
+    private bool $validateSSL;
 
     /**
      * Request type.
      *
      * @var string
      */
-    protected $verb = 'post';
+    protected string $verb = 'post';
 
     /**
      * Set curl constants if not defined.
      *
      * @return void
      */
-    protected function setCurlConstants()
+    protected function setCurlConstants(): void
     {
         $constants = [
             'CURLOPT_SSLVERSION'        => 32,
@@ -106,9 +106,9 @@ trait PayPalHttpClient
      * @param string $key
      * @param string $value
      *
-     * @return bool
+     * @return bool|string
      */
-    protected function defineCurlConstant(string $key, string $value)
+    protected function defineCurlConstant(string $key, string $value): bool|string
     {
         return defined($key) ? true : define($key, $value);
     }
@@ -120,7 +120,7 @@ trait PayPalHttpClient
      *
      * @return void
      */
-    public function setClient(HttpClient $client = null)
+    public function setClient(HttpClient $client = null): void
     {
         if ($client instanceof HttpClient) {
             $this->client = $client;
@@ -138,7 +138,7 @@ trait PayPalHttpClient
      *
      * @return void
      */
-    protected function setHttpClientConfiguration()
+    protected function setHttpClientConfiguration(): void
     {
         $this->setCurlConstants();
 
@@ -162,7 +162,7 @@ trait PayPalHttpClient
      *
      * @return void
      */
-    private function setDefaultValues()
+    private function setDefaultValues(): void
     {
         $paymentAction = empty($this->paymentAction) ? 'Sale' : $this->paymentAction;
         $this->paymentAction = $paymentAction;
@@ -204,7 +204,7 @@ trait PayPalHttpClient
      *
      * @return array|StreamInterface|string
      */
-    private function doPayPalRequest(bool $decode = true)
+    private function doPayPalRequest(bool $decode = true): StreamInterface|array|string
     {
         try {
             $this->apiUrl = collect([$this->config['api_url'], $this->apiEndPoint])->implode('/');

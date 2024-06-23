@@ -2,11 +2,13 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI\BillingPlans;
 
+use Psr\Http\Message\StreamInterface;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Throwable;
 
 trait PricingSchemes
 {
-    protected $pricing_schemes = [];
+    protected array $pricing_schemes = [];
 
     /**
      * Add pricing scheme for the billing plan.
@@ -18,9 +20,9 @@ trait PricingSchemes
      *
      * @throws Throwable
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addPricingScheme(string $interval_unit, int $interval_count, float $price, bool $trial = false): \Srmklive\PayPal\Services\PayPal
+    public function addPricingScheme(string $interval_unit, int $interval_count, float $price, bool $trial = false): PayPalClient
     {
         $this->pricing_schemes[] = $this->addPlanBillingCycle($interval_unit, $interval_count, $price, $trial);
 
@@ -32,9 +34,9 @@ trait PricingSchemes
      *
      * @throws \Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      */
-    public function processBillingPlanPricingUpdates()
+    public function processBillingPlanPricingUpdates(): StreamInterface|array|string
     {
         return $this->updatePlanPricing($this->billing_plan['id'], $this->pricing_schemes);
     }

@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait Trackers
 {
     /**
@@ -9,13 +12,13 @@ trait Trackers
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/tracking/v1/#trackers-batch_post
      */
-    public function addBatchTracking(array $data)
+    public function addBatchTracking(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/shipping/trackers-batch';
 
@@ -31,13 +34,13 @@ trait Trackers
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/tracking/v1/#trackers_post
      */
-    public function addTracking(array $data)
+    public function addTracking(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/shipping/trackers';
 
@@ -51,16 +54,16 @@ trait Trackers
     /**
      * List tracking information based on Transaction ID or tracking number.
      *
-     * @param string $transaction_id
-     * @param string $tracking_number
+     * @param string      $transaction_id
+     * @param string|null $tracking_number
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/tracking/v1/#trackers-batch_get
      */
-    public function listTrackingDetails(string $transaction_id, string $tracking_number = null)
+    public function listTrackingDetails(string $transaction_id, string $tracking_number = null): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/shipping/trackers?transaction_id={$transaction_id}".!empty($tracking_number) ? "&tracking_number={$tracking_number}" : '';
 
@@ -75,13 +78,13 @@ trait Trackers
      * @param string $tracking_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/tracking/v1/#trackers_put
      */
-    public function updateTrackingDetails(string $tracking_id, array $data)
+    public function updateTrackingDetails(string $tracking_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/shipping/trackers/{$tracking_id}";
 
@@ -97,13 +100,13 @@ trait Trackers
      *
      * @param string $tracking_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/tracking/v1/#trackers_get
      */
-    public function showTrackingDetails(string $tracking_id)
+    public function showTrackingDetails(string $tracking_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/shipping/trackers/{$tracking_id}";
 

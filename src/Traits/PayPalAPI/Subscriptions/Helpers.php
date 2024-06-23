@@ -4,6 +4,8 @@ namespace Srmklive\PayPal\Traits\PayPalAPI\Subscriptions;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Psr\Http\Message\StreamInterface;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Throwable;
 
 trait Helpers
@@ -11,47 +13,47 @@ trait Helpers
     /**
      * @var array
      */
-    protected $trial_pricing = [];
+    protected array $trial_pricing = [];
 
     /**
      * @var int
      */
-    protected $payment_failure_threshold = 3;
+    protected int $payment_failure_threshold = 3;
 
     /**
      * @var array
      */
-    protected $product;
+    protected array $product;
 
     /**
      * @var array
      */
-    protected $billing_plan;
+    protected array $billing_plan;
 
     /**
      * @var array
      */
-    protected $shipping_address;
+    protected array $shipping_address;
 
     /**
      * @var array
      */
-    protected $payment_preferences;
+    protected array $payment_preferences;
 
     /**
      * @var bool
      */
-    protected $has_setup_fee = false;
+    protected bool $has_setup_fee = false;
 
     /**
      * @var array
      */
-    protected $taxes;
+    protected array $taxes;
 
     /**
      * @var string
      */
-    protected $custom_id;
+    protected string $custom_id;
 
     /**
      * Setup a subscription.
@@ -62,9 +64,9 @@ trait Helpers
      *
      * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      */
-    public function setupSubscription(string $customer_name, string $customer_email, string $start_date = '')
+    public function setupSubscription(string $customer_name, string $customer_email, string $start_date = ''): StreamInterface|array|string
     {
         $body = [
             'plan_id'    => $this->billing_plan['id'],
@@ -107,11 +109,13 @@ trait Helpers
         $subscription['billing_plan_id'] = $this->billing_plan['id'];
         $subscription['product_id'] = $this->product['id'];
 
-        unset($this->product);
-        unset($this->billing_plan);
-        unset($this->trial_pricing);
-        unset($this->return_url);
-        unset($this->cancel_url);
+        unset(
+            $this->product,
+            $this->billing_plan,
+            $this->trial_pricing,
+            $this->return_url,
+            $this->cancel_url
+        );
 
         return $subscription;
     }
@@ -121,12 +125,12 @@ trait Helpers
      *
      * @param string    $interval_type
      * @param int       $interval_count
-     * @param float|int $price
+     * @param float     $price
      * @param int       $total_cycles
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addPlanTrialPricing(string $interval_type, int $interval_count, float $price = 0, int $total_cycles = 1): \Srmklive\PayPal\Services\PayPal
+    public function addPlanTrialPricing(string $interval_type, int $interval_count, float $price = 0, int $total_cycles = 1): PayPalClient
     {
         $this->trial_pricing = $this->addPlanBillingCycle($interval_type, $interval_count, $price, $total_cycles, true);
 
@@ -138,14 +142,14 @@ trait Helpers
      *
      * @param string    $name
      * @param string    $description
-     * @param float|int $price
+     * @param float     $price
      * @param int       $total_cycles
      *
      * @throws Throwable
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addDailyPlan(string $name, string $description, float $price, int $total_cycles = 0): \Srmklive\PayPal\Services\PayPal
+    public function addDailyPlan(string $name, string $description, float $price, int $total_cycles = 0): PayPalClient
     {
         if (isset($this->billing_plan)) {
             return $this;
@@ -164,14 +168,14 @@ trait Helpers
      *
      * @param string    $name
      * @param string    $description
-     * @param float|int $price
+     * @param float     $price
      * @param int       $total_cycles
      *
      * @throws Throwable
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addWeeklyPlan(string $name, string $description, float $price, int $total_cycles = 0): \Srmklive\PayPal\Services\PayPal
+    public function addWeeklyPlan(string $name, string $description, float $price, int $total_cycles = 0): PayPalClient
     {
         if (isset($this->billing_plan)) {
             return $this;
@@ -190,14 +194,14 @@ trait Helpers
      *
      * @param string    $name
      * @param string    $description
-     * @param float|int $price
+     * @param float     $price
      * @param int       $total_cycles
      *
      * @throws Throwable
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addMonthlyPlan(string $name, string $description, float $price, int $total_cycles = 0): \Srmklive\PayPal\Services\PayPal
+    public function addMonthlyPlan(string $name, string $description, float $price, int $total_cycles = 0): PayPalClient
     {
         if (isset($this->billing_plan)) {
             return $this;
@@ -216,14 +220,14 @@ trait Helpers
      *
      * @param string    $name
      * @param string    $description
-     * @param float|int $price
+     * @param float     $price
      * @param int       $total_cycles
      *
      * @throws Throwable
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addAnnualPlan(string $name, string $description, float $price, int $total_cycles = 0): \Srmklive\PayPal\Services\PayPal
+    public function addAnnualPlan(string $name, string $description, float $price, int $total_cycles = 0): PayPalClient
     {
         if (isset($this->billing_plan)) {
             return $this;
@@ -242,16 +246,16 @@ trait Helpers
      *
      * @param string    $name
      * @param string    $description
-     * @param float|int $price
+     * @param float     $price
      * @param string    $interval_unit
      * @param int       $interval_count
      * @param int       $total_cycles
      *
      * @throws Throwable
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addCustomPlan(string $name, string $description, float $price, string $interval_unit, int $interval_count, int $total_cycles = 0): \Srmklive\PayPal\Services\PayPal
+    public function addCustomPlan(string $name, string $description, float $price, string $interval_unit, int $interval_count, int $total_cycles = 0): PayPalClient
     {
         $billing_intervals = ['DAY', 'WEEK', 'MONTH', 'YEAR'];
 
@@ -319,9 +323,9 @@ trait Helpers
      *
      * @throws Throwable
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addProduct(string $name, string $description, string $type, string $category): \Srmklive\PayPal\Services\PayPal
+    public function addProduct(string $name, string $description, string $type, string $category): PayPalClient
     {
         if (isset($this->product)) {
             return $this;
@@ -349,9 +353,9 @@ trait Helpers
      *
      * @param string $product_id
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addProductById(string $product_id): \Srmklive\PayPal\Services\PayPal
+    public function addProductById(string $product_id): PayPalClient
     {
         $this->product = [
             'id' => $product_id,
@@ -365,9 +369,9 @@ trait Helpers
      *
      * @param string $plan_id
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addBillingPlanById(string $plan_id): \Srmklive\PayPal\Services\PayPal
+    public function addBillingPlanById(string $plan_id): PayPalClient
     {
         $this->billing_plan = [
             'id' => $plan_id,
@@ -416,9 +420,9 @@ trait Helpers
      *
      * @param int $threshold
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addPaymentFailureThreshold(int $threshold): \Srmklive\PayPal\Services\PayPal
+    public function addPaymentFailureThreshold(int $threshold): PayPalClient
     {
         $this->payment_failure_threshold = $threshold;
 
@@ -430,9 +434,9 @@ trait Helpers
      *
      * @param float $price
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addSetupFee(float $price): \Srmklive\PayPal\Services\PayPal
+    public function addSetupFee(float $price): PayPalClient
     {
         $this->has_setup_fee = true;
         $this->payment_preferences = [
@@ -459,9 +463,9 @@ trait Helpers
      * @param string $postal_code
      * @param string $country_code
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addShippingAddress(string $full_name, string $address_line_1, string $address_line_2, string $admin_area_2, string $admin_area_1, string $postal_code, string $country_code): \Srmklive\PayPal\Services\PayPal
+    public function addShippingAddress(string $full_name, string $address_line_1, string $address_line_2, string $admin_area_2, string $admin_area_1, string $postal_code, string $country_code): PayPalClient
     {
         $this->shipping_address = [
             'name'    => [
@@ -485,9 +489,9 @@ trait Helpers
      *
      * @param float $percentage
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addTaxes(float $percentage)
+    public function addTaxes(float $percentage): PayPalClient
     {
         $this->taxes = [
             'percentage' => $percentage,
@@ -502,7 +506,7 @@ trait Helpers
      *
      * @param string $custom_id
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
     public function addCustomId(string $custom_id)
     {

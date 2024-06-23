@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait CatalogProducts
 {
     /**
@@ -9,13 +12,13 @@ trait CatalogProducts
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/catalog-products/v1/#products_create
      */
-    public function createProduct(array $data)
+    public function createProduct(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/catalogs/products';
 
@@ -29,13 +32,13 @@ trait CatalogProducts
     /**
      * List products.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/catalog-products/v1/#products_list
      */
-    public function listProducts()
+    public function listProducts(): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/catalogs/products?page={$this->current_page}&page_size={$this->page_size}&total_required={$this->show_totals}";
 
@@ -50,13 +53,13 @@ trait CatalogProducts
      * @param string $product_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/catalog-products/v1/#products_patch
      */
-    public function updateProduct(string $product_id, array $data)
+    public function updateProduct(string $product_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/catalogs/products/{$product_id}";
 
@@ -72,13 +75,13 @@ trait CatalogProducts
      *
      * @param string $product_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/catalog-products/v1/#products_get
      */
-    public function showProductDetails(string $product_id)
+    public function showProductDetails(string $product_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/catalogs/products/{$product_id}";
 

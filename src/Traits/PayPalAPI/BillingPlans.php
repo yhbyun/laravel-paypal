@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait BillingPlans
 {
     use BillingPlans\PricingSchemes;
@@ -11,13 +14,13 @@ trait BillingPlans
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#plans_create
      */
-    public function createPlan(array $data)
+    public function createPlan(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/billing/plans';
 
@@ -31,13 +34,13 @@ trait BillingPlans
     /**
      * List all billing plans.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#plans_list
      */
-    public function listPlans()
+    public function listPlans(): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/plans?page={$this->current_page}&page_size={$this->page_size}&total_required={$this->show_totals}";
 
@@ -52,13 +55,13 @@ trait BillingPlans
      * @param string $plan_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_update
      */
-    public function updatePlan(string $plan_id, array $data)
+    public function updatePlan(string $plan_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/plans/{$plan_id}";
 
@@ -74,13 +77,13 @@ trait BillingPlans
      *
      * @param string $plan_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#plans_get
      */
-    public function showPlanDetails(string $plan_id)
+    public function showPlanDetails(string $plan_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/plans/{$plan_id}";
 
@@ -94,13 +97,13 @@ trait BillingPlans
      *
      * @param string $plan_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#plans_activate
      */
-    public function activatePlan(string $plan_id)
+    public function activatePlan(string $plan_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/plans/{$plan_id}/activate";
 
@@ -114,13 +117,13 @@ trait BillingPlans
      *
      * @param string $plan_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#plans_deactivate
      */
-    public function deactivatePlan(string $plan_id)
+    public function deactivatePlan(string $plan_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/plans/{$plan_id}/deactivate";
 
@@ -135,13 +138,13 @@ trait BillingPlans
      * @param string $plan_id
      * @param array  $pricing
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#plans_update-pricing-schemes
      */
-    public function updatePlanPricing(string $plan_id, array $pricing)
+    public function updatePlanPricing(string $plan_id, array $pricing): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/plans/{$plan_id}/update-pricing-schemes";
 

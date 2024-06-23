@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits;
 
+use Psr\Http\Message\StreamInterface;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
+
 trait PayPalAPI
 {
     use PayPalAPI\Trackers;
@@ -31,14 +34,14 @@ trait PayPalAPI
     /**
      * Login through PayPal API to get access token.
      *
-     * @throws \Throwable
+     * @return array|StreamInterface|string
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @throws \Throwable
      *
      * @see https://developer.paypal.com/docs/api/get-an-access-token-curl/
      * @see https://developer.paypal.com/docs/api/get-an-access-token-postman/
      */
-    public function getAccessToken()
+    public function getAccessToken(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/oauth2/token';
 
@@ -66,7 +69,7 @@ trait PayPalAPI
      *
      * @return void
      */
-    public function setAccessToken(array $response)
+    public function setAccessToken(array $response): void
     {
         $this->access_token = $response['access_token'];
 
@@ -82,7 +85,7 @@ trait PayPalAPI
      *
      * @return void
      */
-    private function setPayPalAppId(array $response)
+    private function setPayPalAppId(array $response): void
     {
         $app_id = empty($response['app_id']) ? $this->config['app_id'] : $response['app_id'];
 
@@ -94,9 +97,9 @@ trait PayPalAPI
      *
      * @param int $size
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setPageSize(int $size): \Srmklive\PayPal\Services\PayPal
+    public function setPageSize(int $size): PayPalClient
     {
         $this->page_size = $size;
 
@@ -106,11 +109,11 @@ trait PayPalAPI
     /**
      * Set the current page for list resources API calls.
      *
-     * @param int $size
+     * @param int $page
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function setCurrentPage(int $page): \Srmklive\PayPal\Services\PayPal
+    public function setCurrentPage(int $page): PayPalClient
     {
         $this->current_page = $page;
 
@@ -122,9 +125,9 @@ trait PayPalAPI
      *
      * @param bool $totals
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function showTotals(bool $totals): \Srmklive\PayPal\Services\PayPal
+    public function showTotals(bool $totals): PayPalClient
     {
         $this->show_totals = var_export($totals, true);
 

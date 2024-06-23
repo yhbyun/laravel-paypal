@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait PaymentCaptures
 {
     /**
@@ -9,13 +12,13 @@ trait PaymentCaptures
      *
      * @param string $capture_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments/v2/#captures_get
      */
-    public function showCapturedPaymentDetails(string $capture_id)
+    public function showCapturedPaymentDetails(string $capture_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/payments/captures/{$capture_id}";
 
@@ -32,13 +35,13 @@ trait PaymentCaptures
      * @param float  $amount
      * @param string $note
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments/v2/#captures_refund
      */
-    public function refundCapturedPayment(string $capture_id, string $invoice_id, float $amount, string $note)
+    public function refundCapturedPayment(string $capture_id, string $invoice_id, float $amount, string $note): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/payments/captures/{$capture_id}/refund";
 

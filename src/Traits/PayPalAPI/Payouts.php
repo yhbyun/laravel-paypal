@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait Payouts
 {
     /**
@@ -9,13 +12,13 @@ trait Payouts
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments.payouts-batch/v1/#payouts_post
      */
-    public function createBatchPayout(array $data)
+    public function createBatchPayout(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/payments/payouts';
 
@@ -31,13 +34,13 @@ trait Payouts
      *
      * @param string $payout_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments.payouts-batch/v1/#payouts_get
      */
-    public function showBatchPayoutDetails(string $payout_id)
+    public function showBatchPayoutDetails(string $payout_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payments/payouts/{$payout_id}";
 
@@ -51,13 +54,13 @@ trait Payouts
      *
      * @param string $payout_item_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments.payouts-batch/v1/#payouts-item_get
      */
-    public function showPayoutItemDetails(string $payout_item_id)
+    public function showPayoutItemDetails(string $payout_item_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payments/payouts-item/{$payout_item_id}";
 
@@ -71,13 +74,13 @@ trait Payouts
      *
      * @param string $payout_item_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments.payouts-batch/v1/#payouts-item_cancel
      */
-    public function cancelUnclaimedPayoutItem(string $payout_item_id)
+    public function cancelUnclaimedPayoutItem(string $payout_item_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/payments/payouts-item/{$payout_item_id}/cancel";
 

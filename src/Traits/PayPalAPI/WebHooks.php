@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait WebHooks
 {
     /**
@@ -10,13 +13,13 @@ trait WebHooks
      * @param string $url
      * @param array  $events
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_post
      */
-    public function createWebHook(string $url, array $events)
+    public function createWebHook(string $url, array $events): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/notifications/webhooks';
 
@@ -35,13 +38,13 @@ trait WebHooks
     /**
      * List all web hooks.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_list
      */
-    public function listWebHooks()
+    public function listWebHooks(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/notifications/webhooks';
 
@@ -55,13 +58,13 @@ trait WebHooks
      *
      * @param string $web_hook_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_delete
      */
-    public function deleteWebHook(string $web_hook_id)
+    public function deleteWebHook(string $web_hook_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/notifications/webhooks/{$web_hook_id}";
 
@@ -76,13 +79,13 @@ trait WebHooks
      * @param string $web_hook_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_update
      */
-    public function updateWebHook(string $web_hook_id, array $data)
+    public function updateWebHook(string $web_hook_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/notifications/webhooks/{$web_hook_id}";
 
@@ -98,13 +101,13 @@ trait WebHooks
      *
      * @param string $web_hook_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_get
      */
-    public function showWebHookDetails(string $web_hook_id)
+    public function showWebHookDetails(string $web_hook_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/notifications/webhooks/{$web_hook_id}";
 
@@ -118,13 +121,13 @@ trait WebHooks
      *
      * @param string $web_hook_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/webhooks/v1/#webhooks_get
      */
-    public function listWebHookEvents($web_hook_id)
+    public function listWebHookEvents($web_hook_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/notifications/webhooks/{$web_hook_id}/event-types";
 

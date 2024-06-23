@@ -2,6 +2,7 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI\Orders;
 
+use Psr\Http\Message\StreamInterface;
 use Throwable;
 
 trait Helpers
@@ -14,9 +15,9 @@ trait Helpers
      *
      * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      */
-    public function setupOrderConfirmation(string $order_id, string $processing_instruction = '')
+    public function setupOrderConfirmation(string $order_id, string $processing_instruction = ''): StreamInterface|array|string
     {
         $body = [
             'processing_instruction' => $processing_instruction,

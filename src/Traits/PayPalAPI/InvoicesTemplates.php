@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait InvoicesTemplates
 {
     /**
@@ -9,13 +12,13 @@ trait InvoicesTemplates
      *
      * @param string $fields
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#templates_list
      */
-    public function listInvoiceTemplates(string $fields = 'all')
+    public function listInvoiceTemplates(string $fields = 'all'): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/templates?page={$this->current_page}&page_size={$this->page_size}&fields={$fields}";
 
@@ -29,13 +32,13 @@ trait InvoicesTemplates
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#templates_create
      */
-    public function createInvoiceTemplate(array $data)
+    public function createInvoiceTemplate(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v2/invoicing/templates';
 
@@ -51,13 +54,13 @@ trait InvoicesTemplates
      *
      * @param string $template_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#templates_get
      */
-    public function showInvoiceTemplateDetails(string $template_id)
+    public function showInvoiceTemplateDetails(string $template_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/templates/{$template_id}";
 
@@ -72,13 +75,13 @@ trait InvoicesTemplates
      * @param string $template_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#templates_update
      */
-    public function updateInvoiceTemplate(string $template_id, array $data)
+    public function updateInvoiceTemplate(string $template_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/templates/{$template_id}";
 
@@ -94,13 +97,13 @@ trait InvoicesTemplates
      *
      * @param string $template_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#templates_delete
      */
-    public function deleteInvoiceTemplate(string $template_id)
+    public function deleteInvoiceTemplate(string $template_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/templates/{$template_id}";
 

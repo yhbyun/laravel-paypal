@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait PartnerReferrals
 {
     /**
@@ -9,13 +12,13 @@ trait PartnerReferrals
      *
      * @param array $partner_data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/partner-referrals/v2/#partner-referrals_create
      */
-    public function createPartnerReferral(array $partner_data)
+    public function createPartnerReferral(array $partner_data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v2/customer/partner-referrals';
 
@@ -31,13 +34,13 @@ trait PartnerReferrals
      *
      * @param string $partner_referral_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/partner-referrals/v2/#partner-referrals_read
      */
-    public function showReferralData(string $partner_referral_id)
+    public function showReferralData(string $partner_referral_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/customer/partner-referrals/{$partner_referral_id}";
 
@@ -52,13 +55,13 @@ trait PartnerReferrals
      * @param string $partner_id
      * @param string $tracking_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/partner-referrals/v1/#merchant-integration_find
      */
-    public function listSellerTrackingInformation(string $partner_id, string $tracking_id)
+    public function listSellerTrackingInformation(string $partner_id, string $tracking_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/partners/{$partner_id}/merchant-integrations?tracking_id={$tracking_id}";
 
@@ -73,13 +76,13 @@ trait PartnerReferrals
      * @param string $partner_id
      * @param string $merchant_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/partner-referrals/v1/#merchant-integration_status
      */
-    public function showSellerStatus(string $partner_id, string $merchant_id)
+    public function showSellerStatus(string $partner_id, string $merchant_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/partners/{$partner_id}/merchant-integrations/{$merchant_id}";
 
@@ -93,13 +96,13 @@ trait PartnerReferrals
      *
      * @param string $partner_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/partner-referrals/v1/#merchant-integration_credentials
      */
-    public function listMerchantCredentials(string $partner_id)
+    public function listMerchantCredentials(string $partner_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/partners/{$partner_id}/merchant-integrations/credentials";
 

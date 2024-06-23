@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait Invoices
 {
     /**
@@ -9,13 +12,13 @@ trait Invoices
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_create
      */
-    public function createInvoice(array $data)
+    public function createInvoice(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v2/invoicing/invoices';
 
@@ -31,13 +34,13 @@ trait Invoices
      *
      * @param array $fields
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_list
      */
-    public function listInvoices(array $fields = [])
+    public function listInvoices(array $fields = []): StreamInterface|array|string
     {
         $fields_list = collect($fields);
 
@@ -60,13 +63,13 @@ trait Invoices
      * @param bool   $send_merchant
      * @param array  $recipients
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_send
      */
-    public function sendInvoice(string $invoice_id, string $subject = '', string $note = '', bool $send_recipient = true, bool $send_merchant = false, array $recipients = [])
+    public function sendInvoice(string $invoice_id, string $subject = '', string $note = '', bool $send_recipient = true, bool $send_merchant = false, array $recipients = []): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/send";
 
@@ -87,13 +90,13 @@ trait Invoices
      * @param bool   $send_merchant
      * @param array  $recipients
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_remind
      */
-    public function sendInvoiceReminder(string $invoice_id, string $subject = '', string $note = '', bool $send_recipient = true, bool $send_merchant = false, array $recipients = [])
+    public function sendInvoiceReminder(string $invoice_id, string $subject = '', string $note = '', bool $send_recipient = true, bool $send_merchant = false, array $recipients = []): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/remind";
 
@@ -114,13 +117,13 @@ trait Invoices
      * @param bool   $send_merchant
      * @param array  $recipients
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_cancel
      */
-    public function cancelInvoice(string $invoice_id, string $subject = '', string $note = '', bool $send_recipient = true, bool $send_merchant = false, array $recipients = [])
+    public function cancelInvoice(string $invoice_id, string $subject = '', string $note = '', bool $send_recipient = true, bool $send_merchant = false, array $recipients = []): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/cancel";
 
@@ -141,13 +144,13 @@ trait Invoices
      * @param string $payment_note
      * @param string $payment_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_payments
      */
-    public function registerPaymentInvoice(string $invoice_id, string $payment_date, string $payment_method, float $amount, string $payment_note = '', string $payment_id = '')
+    public function registerPaymentInvoice(string $invoice_id, string $payment_date, string $payment_method, float $amount, string $payment_note = '', string $payment_id = ''): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/payments";
 
@@ -175,13 +178,13 @@ trait Invoices
      * @param string $invoice_id
      * @param string $transaction_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_payments-delete
      */
-    public function deleteExternalPaymentInvoice(string $invoice_id, string $transaction_id)
+    public function deleteExternalPaymentInvoice(string $invoice_id, string $transaction_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/payments/{$transaction_id}";
 
@@ -198,13 +201,13 @@ trait Invoices
      * @param string $payment_method
      * @param float  $amount
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_refunds
      */
-    public function refundInvoice(string $invoice_id, string $payment_date, string $payment_method, float $amount)
+    public function refundInvoice(string $invoice_id, string $payment_date, string $payment_method, float $amount): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/refunds";
 
@@ -230,13 +233,13 @@ trait Invoices
      * @param string $invoice_id
      * @param string $transaction_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_refunds-delete
      */
-    public function deleteRefundInvoice(string $invoice_id, string $transaction_id)
+    public function deleteRefundInvoice(string $invoice_id, string $transaction_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/refunds/{$transaction_id}";
 
@@ -252,13 +255,13 @@ trait Invoices
      * @param int    $width
      * @param int    $height
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_generate-qr-code
      */
-    public function generateQRCodeInvoice(string $invoice_id, int $width = 100, int $height = 100)
+    public function generateQRCodeInvoice(string $invoice_id, int $width = 100, int $height = 100): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}/generate-qr-code";
 
@@ -274,13 +277,13 @@ trait Invoices
     /**
      * Generate the next invoice number.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_generate-next-invoice-number
      */
-    public function generateInvoiceNumber()
+    public function generateInvoiceNumber(): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v2/invoicing/generate-next-invoice-number';
 
@@ -294,13 +297,13 @@ trait Invoices
      *
      * @param string $invoice_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_get
      */
-    public function showInvoiceDetails(string $invoice_id)
+    public function showInvoiceDetails(string $invoice_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}";
 
@@ -315,13 +318,13 @@ trait Invoices
      * @param string $invoice_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_update
      */
-    public function updateInvoice(string $invoice_id, array $data)
+    public function updateInvoice(string $invoice_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}";
 
@@ -337,13 +340,13 @@ trait Invoices
      *
      * @param string $invoice_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#invoices_list
      */
-    public function deleteInvoice(string $invoice_id)
+    public function deleteInvoice(string $invoice_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/invoicing/invoices/{$invoice_id}";
 

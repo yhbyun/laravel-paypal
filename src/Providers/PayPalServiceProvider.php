@@ -17,14 +17,14 @@ class PayPalServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = false;
+    protected bool $defer = false;
 
     /**
      * Bootstrap the application events.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // Publish config files
         $this->publishes([
@@ -40,7 +40,7 @@ class PayPalServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->registerPayPal();
 
@@ -52,7 +52,7 @@ class PayPalServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function registerPayPal()
+    private function registerPayPal(): void
     {
         $this->app->singleton('paypal_client', static function () {
             return new PayPalClient();
@@ -64,7 +64,7 @@ class PayPalServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function mergeConfig()
+    private function mergeConfig(): void
     {
         $this->mergeConfigFrom(
             __DIR__.'/../../config/config.php',

@@ -3,18 +3,19 @@
 namespace Srmklive\PayPal\Traits\PayPalAPI\InvoiceSearch;
 
 use Carbon\Carbon;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 trait Filters
 {
     /**
      * @var array
      */
-    protected $invoice_search_filters = [];
+    protected array $invoice_search_filters = [];
 
     /**
      * @var array
      */
-    protected $invoices_date_types = [
+    protected array $invoices_date_types = [
         'invoice_date',
         'due_date',
         'payment_date',
@@ -24,7 +25,7 @@ trait Filters
     /**
      * @var array
      */
-    protected $invoices_status_types = [
+    protected array $invoices_status_types = [
         'DRAFT',
         'SENT',
         'SCHEDULED',
@@ -42,9 +43,9 @@ trait Filters
     /**
      * @param string $email
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByRecipientEmail(string $email): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByRecipientEmail(string $email): PayPalClient
     {
         $this->invoice_search_filters['recipient_email'] = $email;
 
@@ -54,9 +55,9 @@ trait Filters
     /**
      * @param string $name
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByRecipientFirstName(string $name): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByRecipientFirstName(string $name): PayPalClient
     {
         $this->invoice_search_filters['recipient_first_name'] = $name;
 
@@ -66,9 +67,9 @@ trait Filters
     /**
      * @param string $name
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByRecipientLastName(string $name): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByRecipientLastName(string $name): PayPalClient
     {
         $this->invoice_search_filters['recipient_last_name'] = $name;
 
@@ -78,9 +79,9 @@ trait Filters
     /**
      * @param string $name
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByRecipientBusinessName(string $name): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByRecipientBusinessName(string $name): PayPalClient
     {
         $this->invoice_search_filters['recipient_business_name'] = $name;
 
@@ -90,9 +91,9 @@ trait Filters
     /**
      * @param string $invoice_number
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByInvoiceNumber(string $invoice_number): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByInvoiceNumber(string $invoice_number): PayPalClient
     {
         $this->invoice_search_filters['invoice_number'] = $invoice_number;
 
@@ -104,16 +105,16 @@ trait Filters
      *
      * @throws \Exception
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#definition-invoice_status
      */
-    public function addInvoiceFilterByInvoiceStatus(array $status): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByInvoiceStatus(array $status): PayPalClient
     {
         $invalid_status = false;
 
         foreach ($status as $item) {
-            if (!in_array($item, $this->invoices_status_types)) {
+            if (!in_array($item, $this->invoices_status_types, true)) {
                 $invalid_status = true;
             }
         }
@@ -131,9 +132,9 @@ trait Filters
      * @param string $reference
      * @param bool   $memo
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByReferenceorMemo(string $reference, bool $memo = false): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByReferenceorMemo(string $reference, bool $memo = false): PayPalClient
     {
         $field = ($memo === false) ? 'reference' : 'memo';
 
@@ -145,11 +146,11 @@ trait Filters
     /**
      * @param string $currency_code
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByCurrencyCode(string $currency_code = ''): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByCurrencyCode(string $currency_code = ''): PayPalClient
     {
-        $currency = !isset($currency_code) ? $this->getCurrency() : $currency_code;
+        $currency = $currency_code ?? $this->getCurrency();
 
         $this->invoice_search_filters['currency_code'] = $currency;
 
@@ -163,9 +164,9 @@ trait Filters
      *
      * @throws \Exception
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByAmountRange(float $start_amount, float $end_amount, string $amount_currency = ''): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByAmountRange(float $start_amount, float $end_amount, string $amount_currency = ''): PayPalClient
     {
         if ($start_amount > $end_amount) {
             throw new \Exception('Starting amount should always be less than end amount!');
@@ -194,19 +195,19 @@ trait Filters
      *
      * @throws \Exception
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByDateRange(string $start_date, string $end_date, string $date_type): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByDateRange(string $start_date, string $end_date, string $date_type): PayPalClient
     {
         $start_date_obj = Carbon::parse($start_date);
         $end_date_obj = Carbon::parse($end_date);
 
         if ($start_date_obj->gt($end_date_obj)) {
-            throw new \Exception('Starting date should always be less than the end date!');
+            throw new \RuntimeException('Starting date should always be less than the end date!');
         }
 
         if (!in_array($date_type, $this->invoices_date_types)) {
-            throw new \Exception('date type should be always one of these: '.implode(',', $this->invoices_date_types));
+            throw new \RuntimeException('date type should be always one of these: '.implode(',', $this->invoices_date_types));
         }
 
         $this->invoice_search_filters["{$date_type}_range"] = [
@@ -220,9 +221,9 @@ trait Filters
     /**
      * @param bool $archived
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public function addInvoiceFilterByArchivedStatus(bool $archived = null): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByArchivedStatus(bool $archived = null): PayPalClient
     {
         $this->invoice_search_filters['archived'] = $archived;
 
@@ -232,11 +233,11 @@ trait Filters
     /**
      * @param array $fields
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      *
      * @see https://developer.paypal.com/docs/api/invoicing/v2/#definition-field
      */
-    public function addInvoiceFilterByFields(array $fields): \Srmklive\PayPal\Services\PayPal
+    public function addInvoiceFilterByFields(array $fields): PayPalClient
     {
         $this->invoice_search_filters['status'] = $fields;
 

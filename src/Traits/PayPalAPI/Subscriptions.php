@@ -3,6 +3,9 @@
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
 use Carbon\Carbon;
+use DateTimeInterface;
+use Psr\Http\Message\StreamInterface;
+use Throwable;
 
 trait Subscriptions
 {
@@ -13,13 +16,13 @@ trait Subscriptions
      *
      * @param array $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
      */
-    public function createSubscription(array $data)
+    public function createSubscription(array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = 'v1/billing/subscriptions';
 
@@ -36,13 +39,13 @@ trait Subscriptions
      * @param string $subscription_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_patch
      */
-    public function updateSubscription(string $subscription_id, array $data)
+    public function updateSubscription(string $subscription_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/subscriptions/{$subscription_id}";
 
@@ -58,13 +61,13 @@ trait Subscriptions
      *
      * @param string $subscription_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_get
      */
-    public function showSubscriptionDetails(string $subscription_id)
+    public function showSubscriptionDetails(string $subscription_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/subscriptions/{$subscription_id}";
 
@@ -79,13 +82,13 @@ trait Subscriptions
      * @param string $subscription_id
      * @param string $reason
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_activate
      */
-    public function activateSubscription(string $subscription_id, string $reason)
+    public function activateSubscription(string $subscription_id, string $reason): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/subscriptions/{$subscription_id}/activate";
 
@@ -102,13 +105,13 @@ trait Subscriptions
      * @param string $subscription_id
      * @param string $reason
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_cancel
      */
-    public function cancelSubscription(string $subscription_id, string $reason)
+    public function cancelSubscription(string $subscription_id, string $reason): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/subscriptions/{$subscription_id}/cancel";
 
@@ -125,13 +128,13 @@ trait Subscriptions
      * @param string $subscription_id
      * @param string $reason
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_suspend
      */
-    public function suspendSubscription(string $subscription_id, string $reason)
+    public function suspendSubscription(string $subscription_id, string $reason): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/subscriptions/{$subscription_id}/suspend";
 
@@ -149,13 +152,13 @@ trait Subscriptions
      * @param string $note
      * @param float  $amount
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_capture
      */
-    public function captureSubscriptionPayment(string $subscription_id, string $note, float $amount)
+    public function captureSubscriptionPayment(string $subscription_id, string $note, float $amount): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/subscriptions/{$subscription_id}/capture";
 
@@ -179,13 +182,13 @@ trait Subscriptions
      * @param string $subscription_id
      * @param array  $items
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_revise
      */
-    public function reviseSubscription(string $subscription_id, array $items)
+    public function reviseSubscription(string $subscription_id, array $items): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/billing/subscriptions/{$subscription_id}/revise";
 
@@ -200,22 +203,22 @@ trait Subscriptions
      * List transactions for an existing subscription.
      *
      * @param string                    $subscription_id
-     * @param \DateTimeInterface|string $start_date
-     * @param \DateTimeInterface|string $end_date
+     * @param DateTimeInterface|string $start_date
+     * @param DateTimeInterface|string $end_date
      *
-     * @throws \Throwable
+     * @return array|StreamInterface|string
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @throws Throwable
      *
      * @see https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_transactions
      */
-    public function listSubscriptionTransactions(string $subscription_id, $start_date = '', $end_date = '')
+    public function listSubscriptionTransactions(string $subscription_id, DateTimeInterface|string $start_date = '', DateTimeInterface|string $end_date = ''): StreamInterface|array|string
     {
-        if (($start_date instanceof \DateTimeInterface) === false) {
+        if (($start_date instanceof DateTimeInterface) === false) {
             $start_date = Carbon::parse($start_date);
         }
 
-        if (($end_date instanceof \DateTimeInterface) === false) {
+        if (($end_date instanceof DateTimeInterface) === false) {
             $end_date = Carbon::parse($end_date);
         }
 

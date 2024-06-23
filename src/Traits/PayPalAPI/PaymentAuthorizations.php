@@ -2,6 +2,9 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait PaymentAuthorizations
 {
     /**
@@ -9,13 +12,13 @@ trait PaymentAuthorizations
      *
      * @param string $authorization_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments/v2/#authorizations_get
      */
-    public function showAuthorizedPaymentDetails(string $authorization_id)
+    public function showAuthorizedPaymentDetails(string $authorization_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/payments/authorizations/{$authorization_id}";
 
@@ -32,13 +35,13 @@ trait PaymentAuthorizations
      * @param float  $amount
      * @param string $note
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments/v2/#authorizations_capture
      */
-    public function captureAuthorizedPayment(string $authorization_id, string $invoice_id, float $amount, string $note)
+    public function captureAuthorizedPayment(string $authorization_id, string $invoice_id, float $amount, string $note): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/payments/authorizations/{$authorization_id}/capture";
 
@@ -63,13 +66,13 @@ trait PaymentAuthorizations
      * @param string $authorization_id
      * @param float  $amount
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments/v2/#authorizations_reauthorize
      */
-    public function reAuthorizeAuthorizedPayment(string $authorization_id, float $amount)
+    public function reAuthorizeAuthorizedPayment(string $authorization_id, float $amount): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/payments/authorizations/{$authorization_id}/reauthorize";
 
@@ -90,13 +93,13 @@ trait PaymentAuthorizations
      *
      * @param string $authorization_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/payments/v2/#authorizations_void
      */
-    public function voidAuthorizedPayment(string $authorization_id)
+    public function voidAuthorizedPayment(string $authorization_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v2/payments/authorizations/{$authorization_id}/void";
 

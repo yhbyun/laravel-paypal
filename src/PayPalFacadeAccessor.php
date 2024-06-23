@@ -10,18 +10,18 @@ class PayPalFacadeAccessor
     /**
      * PayPal API provider object.
      *
-     * @var
+     * @var PayPalClient
      */
-    public static $provider;
+    public static PayPalClient $provider;
 
     /**
      * Get specific PayPal API provider object to use.
      *
      * @throws Exception
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public static function getProvider()
+    public static function getProvider(): PayPalClient
     {
         return self::$provider;
     }
@@ -31,9 +31,9 @@ class PayPalFacadeAccessor
      *
      * @throws \Exception
      *
-     * @return \Srmklive\PayPal\Services\PayPal
+     * @return PayPalClient
      */
-    public static function setProvider()
+    public static function setProvider(): PayPalClient
     {
         // Set default provider. Defaults to ExpressCheckout
         self::$provider = new PayPalClient();

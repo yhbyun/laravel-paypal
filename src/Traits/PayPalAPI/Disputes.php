@@ -2,18 +2,21 @@
 
 namespace Srmklive\PayPal\Traits\PayPalAPI;
 
+use Psr\Http\Message\StreamInterface;
+use Throwable;
+
 trait Disputes
 {
     /**
      * List disputes.
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_list
      */
-    public function listDisputes()
+    public function listDisputes(): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes?page_size={$this->page_size}";
 
@@ -28,13 +31,13 @@ trait Disputes
      * @param string $dispute_id
      * @param array  $data
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_patch
      */
-    public function updateDispute(string $dispute_id, array $data)
+    public function updateDispute(string $dispute_id, array $data): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}";
 
@@ -50,13 +53,13 @@ trait Disputes
      *
      * @param string $dispute_id
      *
-     * @throws \Throwable
+     * @throws Throwable
      *
-     * @return array|\Psr\Http\Message\StreamInterface|string
+     * @return array|StreamInterface|string
      *
      * @see https://developer.paypal.com/docs/api/customer-disputes/v1/#disputes_get
      */
-    public function showDisputeDetails(string $dispute_id)
+    public function showDisputeDetails(string $dispute_id): StreamInterface|array|string
     {
         $this->apiEndPoint = "v1/customer/disputes/{$dispute_id}";
 
