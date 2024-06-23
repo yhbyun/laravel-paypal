@@ -103,16 +103,51 @@ trait PayPalRequest
      */
     public function setCurrency(string $currency = 'USD'): \Srmklive\PayPal\Services\PayPal
     {
-        $allowedCurrencies = ['AUD', 'BRL', 'CAD', 'CZK', 'DKK', 'EUR', 'HKD', 'HUF', 'ILS', 'INR', 'JPY', 'MYR', 'MXN', 'NOK', 'NZD', 'PHP', 'PLN', 'GBP', 'SGD', 'SEK', 'CHF', 'TWD', 'THB', 'USD', 'RUB', 'CNY'];
-
         // Check if provided currency is valid.
-        if (!in_array($currency, $allowedCurrencies, true)) {
+        if (!in_array($currency, $this->allowedCurrencies(), true)) {
             throw new RuntimeException('Currency is not supported by PayPal.');
         }
 
         $this->currency = $currency;
 
         return $this;
+    }
+
+    /**
+     * Return list of allowed currencies by PayPal.
+     *
+     * @return array
+     */
+    public function allowedCurrencies(): array
+    {
+        return [
+            'AUD',
+            'BRL',
+            'CAD',
+            'CNY',
+            'CZK',
+            'DKK',
+            'EUR',
+            'HKD',
+            'HUF',
+            'ILS',
+            'INR',
+            'JPY',
+            'MYR',
+            'MXN',
+            'NOK',
+            'NZD',
+            'PHP',
+            'PLN',
+            'GBP',
+            'SGD',
+            'SEK',
+            'CHF',
+            'TWD',
+            'THB',
+            'USD',
+            'RUB',
+        ];
     }
 
     /**
