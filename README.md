@@ -12,6 +12,11 @@
 - [Usage](#usage)
 - [Support](#support)
 
+> [!IMPORTANT]
+> v3.0 will not be actively supported after Laravel 11. v4 will be released after Laravel 12. For v4, following are the changes being introduced:
+> * PHP 8.1+ required.
+> * Laravel 10 & onwards required.
+> * Integration of PayPal JS SDK. 
     
 <a name="introduction"></a>
 ## Documentation
