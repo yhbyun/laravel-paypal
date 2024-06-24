@@ -31,7 +31,7 @@ class PublishAssetsCommand extends Command
         $result = Process::run('npm install --save @paypal/paypal-js');
         if ($result->successful()) {
             echo $result->output();
-            $this->comment('Installed the PayPal JS SDK.');
+            $this->line('<fg=green>Installed the PayPal JS SDK.</>');
         } else {
             echo $result->errorOutput();
             $this->error('Unable to install the PayPal JS SDK.');
