@@ -8,6 +8,7 @@ namespace Srmklive\PayPal\Providers;
  */
 
 use Illuminate\Support\ServiceProvider;
+use Srmklive\PayPal\Commands\PublishAssetsCommand;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PayPalServiceProvider extends ServiceProvider
@@ -33,6 +34,9 @@ class PayPalServiceProvider extends ServiceProvider
 
         // Publish Lang Files
         $this->loadTranslationsFrom(__DIR__.'/../../lang', 'paypal');
+
+        // Register artisan commands.
+        $this->registerCommands();
     }
 
     /**
@@ -70,5 +74,17 @@ class PayPalServiceProvider extends ServiceProvider
             __DIR__.'/../../config/config.php',
             'paypal'
         );
+    }
+
+    /**
+     * Register the console .
+     *
+     * @return void
+     */
+    private function registerCommands(): void
+    {
+        $this->commands([
+            PublishAssetsCommand::class
+        ]);
     }
 }
