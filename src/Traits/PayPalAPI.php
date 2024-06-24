@@ -129,7 +129,7 @@ trait PayPalAPI
      */
     public function showTotals(bool $totals): PayPalClient
     {
-        $this->show_totals = var_export($totals, true);
+        $this->show_totals = $totals ? "true" : "false";
 
         return $this;
     }
