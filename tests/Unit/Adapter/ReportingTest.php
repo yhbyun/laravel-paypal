@@ -3,8 +3,8 @@
 namespace Srmklive\PayPal\Tests\Unit\Adapter;
 
 use Carbon\Carbon;
+use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockResponsePayloads;
 

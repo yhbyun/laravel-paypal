@@ -2,8 +2,8 @@
 
 namespace Srmklive\PayPal\Tests\Unit;
 
+use Orchestra\Testbench\TestCase;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Srmklive\PayPal\Tests\MockClientClasses;
 use Srmklive\PayPal\Tests\MockResponsePayloads;

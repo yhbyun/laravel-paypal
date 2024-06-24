@@ -8,3 +8,5 @@ composer.lock
 test.php
 /.venv
 /docs/build
+/node_modules
+package*.json

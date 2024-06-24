@@ -36,6 +36,7 @@
         "nesbot/carbon": "~2.0|^3.0"
     },
     "require-dev": {
+        "orchestra/testbench": "^9.1",
         "pestphp/pest": "~2.0",
         "phpstan/phpstan": "^1.10",
         "symfony/var-dumper": "~5.0|^6.0|^7.0"
