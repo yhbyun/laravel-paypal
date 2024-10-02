@@ -65,7 +65,7 @@ trait PayPalRequest
      *
      * @var bool
      */
-    protected $show_totals = true;
+    protected string $show_totals;
 
     /**
      * Set PayPal API Credentials.
